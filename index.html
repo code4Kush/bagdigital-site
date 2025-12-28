@@ -1,0 +1,111 @@
+======<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BAG DIGITAL | Beaufort SC Websites, Automation & Business Systems</title>
+  <meta name="description" content="Fixed-scope websites, automation, and digital setup for Beaufort & Lowcountry businesses. No retainers. No hourly billing. Clear outcomes on a fixed timeline.">
+
+  <meta property="og:title" content="BAG DIGITAL | Beaufort SC Websites, Automation & Systems">
+  <meta property="og:description" content="Fixed-scope websites and automation for Beaufort & Lowcountry businesses. No retainers. No hourly billing.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bagdigital.tech/">
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="theme-agency">
+  <nav class="nav-bar">
+    <div class="container flex-between">
+      <div class="logo">BAG <span class="accent-text">DIGITAL</span></div>
+      <div class="nav-links">
+        <a href="#core">Services</a>
+        <a href="#packages">Packages</a>
+        <a href="#labs">Labs</a>
+        <a href="#contact" class="pill-btn">Start Project</a>
+      </div>
+    </div>
+  </nav>
+
+  <aside class="theme-dock-wrapper">
+    <div id="theme-dock" class="theme-dock" aria-label="Theme selector"></div>
+  </aside>
+
+  <header class="hero" id="hero-section" role="banner">
+    <div class="hero-overlay"></div>
+    <div class="container hero-inner">
+      <h1 id="hero-h1">--</h1>
+      <p id="hero-p">--</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn primary">Inquire Now</a>
+        <a href="#labs" class="btn secondary">View Labs</a>
+      </div>
+      <p class="scope-rule" id="scope-rule">--</p>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <div class="process-strip">
+      <span class="accent-text">PROCESS:</span> SELECT → INTAKE → BUILD → DELIVERY
+    </div>
+
+    <section class="section">
+      <div class="card">
+        <div class="price-tag">Beaufort / Lowcountry</div>
+        <h3>Built for small teams that need clarity</h3>
+        <p>Contractors, guides, studios, shops, and service businesses in Beaufort need simple systems that reduce admin and increase bookings. Fixed scope. Fixed price. No retainers.</p>
+        <a class="select-link" href="#contact">Start Project</a>
+      </div>
+    </section>
+
+    <section id="core" class="section">
+      <h2 class="section-label">01 // SERVICES, PRODUCTS & PRICING</h2>
+      <div id="core-grid" class="grid-display"></div>
+      <p class="micro-note">All projects are fixed-price and fixed-scope. If scope changes, we re-quote. No retainers.</p>
+    </section>
+
+    <section id="packages" class="section">
+      <h2 class="section-label">02 // PACKAGES</h2>
+      <div id="package-grid" class="grid-display"></div>
+    </section>
+
+    <section id="labs" class="section">
+      <h2 class="section-label">03 // DESIGN LABS</h2>
+      <p class="section-intro">Short prototypes that show structure, workflow, and conversion strategy—tailored to how Beaufort businesses actually operate.</p>
+      <div id="lab-grid" class="grid-display"></div>
+      <p class="micro-note">These labs are examples of approach. If you want one adapted to your business, select a service/package and describe your goals.</p>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="form-card">
+        <h2>Start Your Project</h2>
+        <form id="contact-form">
+          <div class="form-row">
+            <input type="text" id="name" placeholder="Full Name" autocomplete="name" required>
+            <input type="email" id="email" placeholder="Email Address" autocomplete="email" required>
+          </div>
+          <div class="form-row">
+            <select id="service" required>
+              <option value="" disabled selected>Select service or package</option>
+            </select>
+            <select id="timeline" required>
+              <option value="" disabled selected>Timeline</option>
+              <option value="ASAP">ASAP (7–14 Days)</option>
+              <option value="Standard">Standard (14+ Days)</option>
+            </select>
+          </div>
+          <textarea id="message" placeholder="What business problem are we solving? (Bookings, admin overload, inventory, website clarity, etc.)" rows="4" required></textarea>
+          <button type="submit" id="submit-btn" class="btn primary full-width">Send Project Brief</button>
+          <p class="form-footnote">You’ll get a reply with next steps and a short intake checklist.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container" role="contentinfo">
+    <p id="footer-line">BAG DIGITAL // BEAUFORT, SOUTH CAROLINA</p>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
