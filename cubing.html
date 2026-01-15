@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>BAGDigital.tech — Cubing Day Toolkit (Cubers + Parents)</title>
+  <meta name="description" content="A bright, readable cubing day toolkit: WCA-style practice scrambles, big timer, visual replay, parent tips, and method guidance (CFOP/Roux/ZZ/Beginner). Built by BAGDigital.tech." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Material Web (light usage only) -->
+  <script type="module">
+    import 'https://unpkg.com/@material/web/all.js?module';
+  </script>
+
+  <style>
+    :root{
+      --b:#0057FF; --r:#E61B23; --y:#FFD400; --g:#00B050; --o:#FF6A00;
+      --bg:#F3F7FF; --surface:#FFFFFF; --ink:#0B1220; --muted:#4C5A73;
+      --line: rgba(11,18,32,.10); --brand:#1a73e8; --brandInk:#0b2a55;
+      --e1: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.05);
+      --e2: 0 10px 22px rgba(16,24,40,.10);
+      --r16:16px; --r20:20px; --r24:24px;
+      --ease: cubic-bezier(.2,.8,.2,1); --t: 160ms;
+
+      font-family: Roboto, system-ui, -apple-system, Segoe UI, Helvetica, Arial;
+      color-scheme: light;
+
+      --md-sys-color-primary: var(--brand);
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-surface: var(--surface);
+      --md-sys-color-on-surface: var(--ink);
+      --md-sys-color-outline: rgba(11,18,32,.16);
+      --md-filled-button-container-shape: 999px;
+      --md-outlined-button-container-shape: 999px;
+      --md-outlined-text-field-container-shape: 14px;
+
+      /* Readability without user resizing */
+      --h1: clamp(20px, 2.0vw + 14px, 32px);
+      --h2: clamp(14px, 1.1vw + 12px, 18px);
+      --p:  clamp(14px, 0.6vw + 12px, 16px);
+      --mono: clamp(14px, 0.7vw + 12px, 16px);
+      --bigTime: clamp(58px, 6.0vw + 10px, 104px);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 680px at 6% -10%, rgba(0,87,255,.14), transparent 60%),
+        radial-gradient(1000px 620px at 96% 0%, rgba(230,27,35,.10), transparent 58%),
+        radial-gradient(1100px 700px at 70% 110%, rgba(255,212,0,.12), transparent 60%),
+        radial-gradient(1000px 680px at 12% 110%, rgba(0,176,80,.10), transparent 60%),
+        var(--bg);
+      color: var(--ink);
+    }
+    a{ color: var(--brand); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    header{
+      position: sticky;
+      top:0;
+      z-index:10;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .top{
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 12px 14px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .logo{
+      width:38px; height:38px;
+      border-radius: 14px;
+      background: conic-gradient(from 180deg, var(--b), var(--r), var(--y), var(--g), var(--o), var(--b));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.82), var(--e1);
+      flex:0 0 auto;
+    }
+    .brandText{ min-width:0; }
+    .brandText .title{
+      font-weight: 900;
+      color: var(--brandInk);
+      font-size: var(--h2);
+      letter-spacing: .2px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .brandText .sub{
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12.5px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .navActions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    main{
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 14px;
+      display:grid;
+      gap: 14px;
+    }
+
+    .hero{
+      border: 1px solid var(--line);
+      border-radius: var(--r24);
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--e2);
+      padding: 14px;
+      display:grid;
+      gap: 10px;
+    }
+    .hero h1{
+      margin:0;
+      font-size: var(--h1);
+      color: var(--brandInk);
+    }
+    .hero p{
+      margin:0;
+      font-size: var(--p);
+      color: rgba(11,18,32,.82);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .heroRow{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content: space-between;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(11,18,32,.12);
+      background:#fff;
+      box-shadow: var(--e1);
+      font-weight: 900;
+      font-size: 12px;
+      color: rgba(11,18,32,.84);
+      white-space: nowrap;
+    }
+    .pill .d{ width:10px; height:10px; border-radius:50%; background: var(--b); box-shadow: 0 0 0 4px rgba(0,87,255,.14); }
+
+    .cols{
+      display:grid;
+      grid-template-columns: 1.45fr 1.05fr 0.9fr;
+      gap: 14px;
+      align-items:start;
+    }
+    @media (max-width: 1100px){
+      .cols{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      border: 1px solid var(--line);
+      border-radius: var(--r24);
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--e2);
+      overflow:hidden;
+    }
+    .cardHead{
+      padding: 12px 12px 10px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(26,115,232,.06), rgba(255,255,255,0));
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap:10px;
+      flex-wrap: wrap;
+    }
+    .cardHead h2{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.8px;
+      text-transform: uppercase;
+      color: var(--brandInk);
+      font-weight: 900;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--b);
+      box-shadow: 0 0 0 4px rgba(0,87,255,.14);
+    }
+    .cardBody{ padding: 12px; display:grid; gap: 10px; }
+
+    .row{ display:flex; gap:10px; flex-wrap: wrap; align-items:end; justify-content: space-between; }
+    .control{
+      flex: 1 1 320px;
+      display:grid;
+      gap: 6px;
+    }
+    label{
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--muted);
+    }
+    select{
+      width:100%;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(11,18,32,.16);
+      background:#fff;
+      box-shadow: var(--e1);
+      padding: 0 12px;
+      font: 900 15px/1 Roboto, system-ui;
+      color: rgba(11,18,32,.90);
+      outline:none;
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(11,18,32,.55) 50%),
+        linear-gradient(135deg, rgba(11,18,32,.55) 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) 19px,
+        calc(100% - 12px) 19px;
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+    }
+
+    .scramble{
+      border: 1px dashed rgba(0,87,255,.36);
+      background: rgba(0,87,255,.06);
+      border-radius: var(--r20);
+      padding: 12px;
+      box-shadow: var(--e1);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-weight: 900;
+      font-size: var(--mono);
+      line-height: 1.55;
+      color: rgba(11,18,32,.92);
+      min-height: 74px;
+      display:flex;
+      align-items:center;
+      word-break: break-word;
+    }
+
+    .timerBox{
+      border: 1px solid rgba(230,27,35,.14);
+      background:
+        radial-gradient(900px 260px at 50% -40%, rgba(230,27,35,.10), transparent 70%),
+        radial-gradient(900px 260px at 50% 140%, rgba(0,87,255,.10), transparent 70%),
+        rgba(246,248,252,.92);
+      border-radius: var(--r24);
+      padding: 12px;
+      box-shadow: var(--e1);
+      display:grid;
+      gap:10px;
+    }
+    .timerHint{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap:10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 12px;
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      background:#fff;
+      border: 1px solid rgba(11,18,32,.12);
+      padding: 2px 8px;
+      border-radius: 999px;
+      box-shadow: var(--e1);
+      color: rgba(11,18,32,.80);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .time{
+      text-align:center;
+      font-variant-numeric: tabular-nums;
+      font-weight: 900;
+      font-size: var(--bigTime);
+      letter-spacing: -1px;
+      color: var(--brandInk);
+      line-height:1.05;
+      user-select:none;
+    }
+    .status{
+      justify-self:center;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(11,18,32,.12);
+      background:#fff;
+      box-shadow: var(--e1);
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(11,18,32,.86);
+      user-select:none;
+    }
+    .status .sdot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--b);
+      box-shadow: 0 0 0 4px rgba(0,87,255,.14);
+      transition: background var(--t) var(--ease), box-shadow var(--t) var(--ease);
+    }
+
+    .statsRow{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    md-outlined-text-field{ width:100%; }
+
+    .miniActions{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content: space-between;
+    }
+
+    .vizBox{
+      border:1px solid rgba(11,18,32,.10);
+      background:#fff;
+      border-radius: var(--r24);
+      box-shadow: var(--e1);
+      overflow:hidden;
+      height: 320px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 10px;
+    }
+    twisty-player{
+      width: 100%;
+      height: 100%;
+      max-width: 420px;
+      border-radius: 18px;
+    }
+
+    .tip{
+      border:1px solid rgba(11,18,32,.10);
+      background: rgba(249,251,255,.96);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: var(--e1);
+      display:grid;
+      gap: 4px;
+    }
+    .tip b{ font-weight: 900; font-size: var(--p); color: rgba(11,18,32,.92); }
+    .tip span{ font-weight: 600; font-size: var(--p); color: rgba(11,18,32,.78); line-height: 1.4; }
+
+    /* Methods */
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .tabBtn{
+      border: 1px solid rgba(11,18,32,.12);
+      background:#fff;
+      box-shadow: var(--e1);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 900;
+      font-size: 12px;
+      color: rgba(11,18,32,.84);
+      cursor:pointer;
+      transition: transform var(--t) var(--ease), background var(--t) var(--ease);
+      user-select:none;
+    }
+    .tabBtn:hover{ transform: translateY(-1px); }
+    .tabBtn.active{ background: rgba(0,87,255,.10); }
+    .methodBox{
+      border:1px solid rgba(11,18,32,.10);
+      background:#fff;
+      border-radius: var(--r20);
+      box-shadow: var(--e1);
+      padding: 12px;
+      display:grid;
+      gap: 10px;
+    }
+    .methodBox h3{
+      margin:0;
+      font-size: var(--h2);
+      font-weight: 900;
+      color: rgba(11,18,32,.90);
+    }
+    .bullets{
+      margin:0;
+      padding-left: 18px;
+      color: rgba(11,18,32,.80);
+      font-weight: 650;
+      font-size: var(--p);
+      line-height: 1.45;
+    }
+    .methodFooter{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content: space-between;
+    }
+    .smallNote{
+      font-size: 12.5px;
+      font-weight: 650;
+      color: rgba(11,18,32,.70);
+      line-height:1.35;
+    }
+
+    .promo .cap{
+      border:1px solid rgba(11,18,32,.10);
+      background: #fff;
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: var(--e1);
+    }
+    .promo .cap b{ display:block; font-weight: 900; color: rgba(11,18,32,.92); }
+    .promo .cap span{ display:block; margin-top:4px; color: rgba(11,18,32,.76); font-weight: 600; line-height:1.4; font-size: var(--p); }
+
+    footer{
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 10px 14px 20px;
+      color: rgba(11,18,32,.70);
+      font-weight: 600;
+      font-size: 12.5px;
+      line-height:1.4;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="top">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="brandText">
+        <div class="title">BAGDigital.tech — Cubing Day Toolkit</div>
+        <div class="sub">Practice scrambles + big timer for cubers. Clear support tips for parents.</div>
+      </div>
+    </div>
+
+    <div class="navActions">
+      <md-outlined-button id="copyLinkBtn">Copy link</md-outlined-button>
+      <md-filled-button id="openWcaBtn">Official competition page</md-filled-button>
+      <md-outlined-button id="copyShareBtn">Copy share text</md-outlined-button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-label="Intro">
+    <h1>Competition-day tools that are easy to read and fast to use.</h1>
+    <p>
+      Cubers: generate WCA-style practice scrambles, run a large timer, and watch a visual replay.
+      Parents: get quick “what to do” guidance that actually helps.
+      Built by <b>BAGDigital.tech</b> (web + automation).
+    </p>
+    <div class="heroRow">
+      <span class="pill"><span class="d"></span>Readable on phones and laptops</span>
+      <span class="pill"><span class="d" style="background:var(--g); box-shadow:0 0 0 4px rgba(0,176,80,.14)"></span>Practice scrambles + visual replay</span>
+      <span class="pill"><span class="d" style="background:var(--r); box-shadow:0 0 0 4px rgba(230,27,35,.12)"></span>Parent tips: calm, logistics, support</span>
+    </div>
+  </section>
+
+  <section class="cols">
+    <!-- CUBERS -->
+    <section class="card" aria-label="For speedcubers">
+      <div class="cardHead">
+        <h2><span class="dot" style="background:var(--r); box-shadow:0 0 0 4px rgba(230,27,35,.12)"></span>For Speedcubers</h2>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <md-outlined-button id="newScrambleBtn">New scramble</md-outlined-button>
+          <md-outlined-button id="copyScrambleBtn">Copy</md-outlined-button>
+          <md-outlined-button id="copyUndoBtn">Copy undo solution</md-outlined-button>
+        </div>
+      </div>
+
+      <div class="cardBody">
+        <div class="row">
+          <div class="control">
+            <label for="eventSelect">Puzzle / Event</label>
+            <select id="eventSelect" aria-label="Puzzle/Event"></select>
+          </div>
+          <span class="pill"><span class="d" style="background:var(--b)"></span><span id="scrambleStatus">WCA-style practice scramble</span></span>
+        </div>
+
+        <div class="scramble" id="scrambleText" aria-live="polite">Loading scrambler…</div>
+
+        <div class="timerBox">
+          <div class="timerHint">
+            <span><span class="kbd">Hold Space</span> → release to start → <span class="kbd">Space</span> to stop</span>
+            <span>Local-only</span>
+          </div>
+
+          <div class="time" id="timeDisplay">0.00</div>
+
+          <div class="status" id="statusPill">
+            <span class="sdot" aria-hidden="true"></span>
+            <span id="statusText">Ready</span>
+          </div>
+
+          <div class="statsRow">
+            <md-outlined-text-field id="ao5" label="Ao5" value="—" readonly></md-outlined-text-field>
+            <md-outlined-text-field id="ao12" label="Ao12" value="—" readonly></md-outlined-text-field>
+          </div>
+
+          <div class="miniActions">
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <md-filled-button id="solveReplayBtn">Visual “undo” replay</md-filled-button>
+              <md-outlined-button id="playScrambleBtn">Play scramble</md-outlined-button>
+            </div>
+            <md-outlined-button id="clearBtn">Clear session</md-outlined-button>
+          </div>
+
+          <div class="smallNote">
+            “Undo replay” shows the inverse of the scramble (guaranteed to return to solved). It is not a CFOP/Roux/ZZ reconstruction.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARENTS -->
+    <section class="card" aria-label="For parents">
+      <div class="cardHead">
+        <h2><span class="dot" style="background:var(--g); box-shadow:0 0 0 4px rgba(0,176,80,.12)"></span>For Parents</h2>
+        <span class="pill"><span class="d" style="background:var(--y); box-shadow:0 0 0 4px rgba(255,212,0,.16)"></span>Practical, calm, supportive</span>
+      </div>
+
+      <div class="cardBody">
+        <div class="tip">
+          <b>Be early and calm.</b>
+          <span>Competitions are loud and time-based. Your calm is a competitive advantage for your kid.</span>
+        </div>
+        <div class="tip">
+          <b>Pack the basics.</b>
+          <span>Water, a clean snack (not greasy), wipes/towel, charger, and a light jacket.</span>
+        </div>
+        <div class="tip">
+          <b>After a bad solve: wait 60 seconds.</b>
+          <span>Then ask: “Reset or talk?” Avoid coaching at the table.</span>
+        </div>
+        <div class="tip">
+          <b>Best phrases.</b>
+          <span>“Have fun.” “One solve at a time.” “Proud of you.”</span>
+        </div>
+        <div class="tip">
+          <b>What matters most?</b>
+          <span>Not a PB. A good routine: breathe, execute, and move on.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- METHODS + VISUAL + BAGDIGITAL -->
+    <aside class="card" aria-label="Methods and visual replay">
+      <div class="cardHead">
+        <h2><span class="dot" style="background:var(--b)"></span>Methods + Visual</h2>
+        <span class="pill"><span class="d" style="background:var(--o); box-shadow:0 0 0 4px rgba(255,106,0,.14)"></span>Built by BAGDigital</span>
+      </div>
+
+      <div class="cardBody">
+        <div class="vizBox">
+          <twisty-player id="player" background="none" control-panel="none" hint-facelets="auto"></twisty-player>
+        </div>
+
+        <div class="tabs" aria-label="Solve methods">
+          <button class="tabBtn active" id="tabCfop">CFOP</button>
+          <button class="tabBtn" id="tabRoux">Roux</button>
+          <button class="tabBtn" id="tabZz">ZZ</button>
+          <button class="tabBtn" id="tabStd">Standard</button>
+        </div>
+
+        <div class="methodBox" id="methodBox">
+          <!-- populated by JS -->
+        </div>
+
+        <div class="promo" style="display:grid; gap:10px;">
+          <div class="cap">
+            <b>BAGDigital.tech builds useful tools.</b>
+            <span>Fast pages and lightweight micro-tools like this—designed to be readable, practical, and shareable.</span>
+          </div>
+          <div class="cap">
+            <b>Automation + operations</b>
+            <span>Forms → Sheets → Apps Script → Shopify/CRM workflows. Reduce manual steps and mistakes.</span>
+          </div>
+          <div class="cap">
+            <b>Want a page for your club/event?</b>
+            <span><a href="https://bagdigital.tech">Visit BAGDigital.tech</a> and ask for a “competition day page.”</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<footer>
+  Practice scrambles are generated for training use. Official competition scramble sets are handled by organizers using approved tooling.
+</footer>
+
+<script type="module">
+  import "https://cdn.cubing.net/v0/js/cubing/twisty";
+  import { randomScrambleForEvent } from "https://cdn.cubing.net/v0/js/cubing/scramble";
+
+  // ---------- Clipboard ----------
+  async function copyToClipboard(text){
+    try{ await navigator.clipboard.writeText(text); return true; }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=text;
+      document.body.appendChild(ta); ta.select();
+      const ok=document.execCommand('copy');
+      document.body.removeChild(ta); return ok;
+    }
+  }
+
+  // ---------- Header actions ----------
+  document.getElementById('openWcaBtn').addEventListener('click', () => {
+    window.open('https://www.worldcubeassociation.org/competitions/GeorgiaChampionship2026', '_blank', 'noopener,noreferrer');
+  });
+  document.getElementById('copyLinkBtn').addEventListener('click', async () => {
+    const ok = await copyToClipboard(location.href);
+    alert(ok ? 'Link copied.' : 'Could not copy link.');
+  });
+
+  const shareText = [
+    "Cubing Day Toolkit (free): WCA-style practice scrambles + big timer + visual replay + parent tips + method guidance.",
+    "Built by BAGDigital.tech (web + automation).",
+    "Official competition info: https://www.worldcubeassociation.org/competitions/GeorgiaChampionship2026",
+    location.href
+  ].join("\\n");
+
+  document.getElementById('copyShareBtn').addEventListener('click', async () => {
+    const ok = await copyToClipboard(shareText);
+    alert(ok ? 'Share text copied.' : 'Could not copy share text.');
+  });
+
+  // ---------- Event list ----------
+  const EVENTS = [
+    { event:"333",   label:"3×3×3",          puzzle:"3x3x3" },
+    { event:"222",   label:"2×2×2",          puzzle:"2x2x2" },
+    { event:"444",   label:"4×4×4",          puzzle:"4x4x4" },
+    { event:"555",   label:"5×5×5",          puzzle:"5x5x5" },
+    { event:"666",   label:"6×6×6",          puzzle:"6x6x6" },
+    { event:"777",   label:"7×7×7",          puzzle:"7x7x7" },
+    { event:"333oh", label:"3×3 One-Handed", puzzle:"3x3x3" },
+    { event:"pyram", label:"Pyraminx",       puzzle:"pyraminx" },
+    { event:"skewb", label:"Skewb",          puzzle:"skewb" },
+    { event:"minx",  label:"Megaminx",       puzzle:"megaminx" },
+    { event:"sq1",   label:"Square-1",       puzzle:"square1" },
+    { event:"clock", label:"Clock",          puzzle:"clock" },
+  ];
+
+  const eventSelect = document.getElementById('eventSelect');
+  for (const ev of EVENTS){
+    const opt = document.createElement('option');
+    opt.value = ev.event;
+    opt.textContent = ev.label;
+    eventSelect.appendChild(opt);
+  }
+  eventSelect.value = "333";
+
+  const scrambleText = document.getElementById('scrambleText');
+  const scrambleStatus = document.getElementById('scrambleStatus');
+  const player = document.getElementById('player');
+
+  let lastScramble = "";
+  let lastUndoAlg = ""; // inverse scramble
+
+  function puzzleForEventId(eventId){
+    return (EVENTS.find(e => e.event === eventId) || EVENTS[0]).puzzle;
+  }
+
+  // Inverse scramble = guaranteed return to solved
+  function invertMove(m){
+    if (!m) return m;
+    if (m.endsWith("2")) return m;
+    if (m.endsWith("'")) return m.slice(0,-1);
+    return m + "'";
+  }
+  function inverseAlg(algStr){
+    const toks = algStr.trim().split(/\\s+/).filter(Boolean);
+    return toks.reverse().map(invertMove).join(" ");
+  }
+
+  // ---------- Methods UI (guidance, not method-specific reconstruction) ----------
+  const methodBox = document.getElementById('methodBox');
+  const tabs = [
+    { id: 'cfop', btn: document.getElementById('tabCfop') },
+    { id: 'roux', btn: document.getElementById('tabRoux') },
+    { id: 'zz',   btn: document.getElementById('tabZz') },
+    { id: 'std',  btn: document.getElementById('tabStd') },
+  ];
+  let activeMethod = 'cfop';
+
+  function methodContent(method, scramble, eventId){
+    const commonHeader = (title, subtitle) => `
+      <h3>${title}</h3>
+      <div class="smallNote">${subtitle}</div>
+      <div class="smallNote"><b>Current scramble:</b> ${scramble ? scramble : '—'}</div>
+    `;
+
+    // Only present method guidance when it is a 3x3-like scramble.
+    // (For non-3x3 events, we keep it still useful but generic.)
+    const is333Family = ['333','333oh'].includes(eventId);
+
+    const links = {
+      cfop: [
+        ['J Perm CFOP resources', 'https://jperm.net/3x3/cfop'],
+        ['SpeedSolving Wiki — CFOP', 'https://www.speedsolving.com/wiki/index.php/CFOP_method'],
+      ],
+      roux: [
+        ['SpeedSolving Wiki — Roux', 'https://www.speedsolving.com/wiki/index.php/Roux_method'],
+        ['Kian Mansour Roux (overview)', 'https://www.youtube.com/results?search_query=Kian+Mansour+Roux+method'],
+      ],
+      zz: [
+        ['SpeedSolving Wiki — ZZ', 'https://www.speedsolving.com/wiki/index.php/ZZ_method'],
+        ['ZZ method (search)', 'https://www.youtube.com/results?search_query=ZZ+method+EO+line+explanation'],
+      ],
+      std: [
+        ['Beginner method (J Perm)', 'https://jperm.net/3x3/learn/beginner'],
+        ['SpeedSolving Wiki — Beginner', 'https://www.speedsolving.com/wiki/index.php/Beginner_method'],
+      ],
+    };
+
+    const linkHtml = (arr) => `
+      <div class="methodFooter">
+        <span class="smallNote"><b>Learn more:</b> ${arr.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener noreferrer">${t}</a>`).join(' • ')}</span>
+        <span class="smallNote"><b>Note:</b> This panel is guidance, not an auto-reconstruction.</span>
+      </div>
+    `;
+
+    if (!is333Family){
+      // Non-3x3: keep it honest and still useful
+      return `
+        ${commonHeader('Method guidance (3×3 focused)', 'These method notes are tuned for 3×3/3×3OH. For other events, use them as general planning cues.')}
+        <ul class="bullets">
+          <li>Inspection: identify a simple start (pairing, blocks, or edge orientation).</li>
+          <li>Prioritize lookahead and turning quality—avoid forcing fancy starts.</li>
+          <li>Use the visual “undo replay” as a correctness reference for the scramble, not as a method solution.</li>
+        </ul>
+        ${linkHtml(links[method])}
+      `;
+    }
+
+    if (method === 'cfop'){
+      return `
+        ${commonHeader('CFOP (Cross → F2L → OLL → PLL)', 'Use this as a per-scramble inspection checklist.')}
+        <ul class="bullets">
+          <li><b>Cross:</b> pick a color with 1–2 easy pairings; aim for low-move, low-regrip cross.</li>
+          <li><b>First pair:</b> plan your first F2L pair during inspection if possible.</li>
+          <li><b>F2L:</b> prioritize flow—avoid rotations; take the pair you can see.</li>
+          <li><b>Last layer:</b> recognize OLL/PLL early; turning accuracy beats rushing.</li>
+          <li><b>If you’re stuck:</b> take a clean U/U’ to re-track pieces; don’t “thrash.”</li>
+        </ul>
+        ${linkHtml(links.cfop)}
+      `;
+    }
+
+    if (method === 'roux'){
+      return `
+        ${commonHeader('Roux (FB → SB → CMLL → LSE)', 'Use this as a per-scramble inspection checklist.')}
+        <ul class="bullets">
+          <li><b>First block:</b> look for a 1×2×3 with minimal moves; keep it simple.</li>
+          <li><b>Second block:</b> build to reduce awkward M slices later; maintain cube orientation.</li>
+          <li><b>CMLL:</b> aim for clean recognition; don’t sacrifice block integrity for fancy starts.</li>
+          <li><b>LSE:</b> think “edges then centers” (conceptually); stay controlled with M/U.</li>
+          <li><b>If you’re stuck:</b> rebuild SB cleanly—messy SB leads to messy LSE.</li>
+        </ul>
+        ${linkHtml(links.roux)}
+      `;
+    }
+
+    if (method === 'zz'){
+      return `
+        ${commonHeader('ZZ (EO → Line → F2L → LL)', 'Use this as a per-scramble inspection checklist.')}
+        <ul class="bullets">
+          <li><b>EO:</b> in inspection, check edge orientation quickly—choose a plan you can execute cleanly.</li>
+          <li><b>Line:</b> aim for a stable line that sets up rotationless F2L.</li>
+          <li><b>F2L:</b> enjoy the rotationless flow—prioritize visibility and lookahead.</li>
+          <li><b>LL:</b> pick your LL approach (ZBLL/OLL+PLL/2GLL) based on your knowledge set.</li>
+          <li><b>If you’re stuck:</b> simplify EO/Line—reliability > theory at a comp.</li>
+        </ul>
+        ${linkHtml(links.zz)}
+      `;
+    }
+
+    // Standard / Beginner
+    return `
+      ${commonHeader('Standard / Beginner (Layer-by-layer)', 'This is for newer cubers or warmups; it’s also great for nerves.')}
+      <ul class="bullets">
+        <li><b>First layer:</b> build a cross, then place corners with control.</li>
+        <li><b>Second layer:</b> insert edges one at a time; avoid breaking the first layer.</li>
+        <li><b>Last layer:</b> focus on correct sequences; slow is smooth, smooth is fast.</li>
+        <li><b>If you’re nervous:</b> default to safe, memorized steps and avoid experiments.</li>
+      </ul>
+      ${linkHtml(links.std)}
+    `;
+  }
+
+  function setActiveMethod(newMethod){
+    activeMethod = newMethod;
+    for (const t of tabs){
+      t.btn.classList.toggle('active', t.id === newMethod);
+    }
+    methodBox.innerHTML = methodContent(activeMethod, lastScramble, eventSelect.value);
+  }
+
+  for (const t of tabs){
+    t.btn.addEventListener('click', () => setActiveMethod(t.id));
+  }
+
+  // ---------- Scramble generation ----------
+  async function generateScramble(){
+    scrambleStatus.textContent = "Generating…";
+    try{
+      const eventId = eventSelect.value || "333";
+      const alg = await randomScrambleForEvent(eventId);
+      lastScramble = alg.toString();
+      lastUndoAlg = inverseAlg(lastScramble);
+
+      scrambleText.textContent = lastScramble;
+      scrambleStatus.textContent = "WCA-style practice scramble";
+
+      // visual: scramble set
+      player.puzzle = puzzleForEventId(eventId);
+      player.alg = lastScramble;
+      player.timestamp = 0;
+      player.pause();
+
+      // update methods panel to reflect current scramble
+      methodBox.innerHTML = methodContent(activeMethod, lastScramble, eventId);
+    }catch(err){
+      console.error(err);
+      scrambleText.textContent = "Scrambler failed to load. Check network and reload.";
+      scrambleStatus.textContent = "Error";
+      methodBox.innerHTML = methodContent(activeMethod, "", eventSelect.value);
+    }
+  }
+
+  document.getElementById('newScrambleBtn').addEventListener('click', generateScramble);
+  document.getElementById('copyScrambleBtn').addEventListener('click', async () => {
+    const ok = await copyToClipboard(lastScramble || scrambleText.textContent.trim());
+    alert(ok ? "Scramble copied." : "Could not copy.");
+  });
+  document.getElementById('copyUndoBtn').addEventListener('click', async () => {
+    const ok = await copyToClipboard(lastUndoAlg || "");
+    alert(ok ? "Undo solution copied." : "Could not copy.");
+  });
+  eventSelect.addEventListener('change', generateScramble);
+
+  document.getElementById('playScrambleBtn').addEventListener('click', () => {
+    if(!lastScramble) return;
+    player.alg = lastScramble;
+    player.timestamp = 0;
+    player.play();
+  });
+  document.getElementById('solveReplayBtn').addEventListener('click', () => {
+    if(!lastUndoAlg) return;
+    player.alg = lastUndoAlg;
+    player.timestamp = 0;
+    player.play();
+  });
+
+  // ---------- Timer/session ----------
+  const LS_SOLVES = 'bagdigital_cubing_solves_v6';
+  let armed=false, running=false, startTime=0, raf=0;
+  let solves=[];
+
+  const timeDisplay=document.getElementById('timeDisplay');
+  const statusText=document.getElementById('statusText');
+  const sdot=document.querySelector('#statusPill .sdot');
+  const ao5=document.getElementById('ao5');
+  const ao12=document.getElementById('ao12');
+
+  function setStatus(text, mode){
+    statusText.textContent=text;
+    if(mode==='arm'){ sdot.style.background='var(--y)'; sdot.style.boxShadow='0 0 0 4px rgba(255,212,0,.18)'; return; }
+    if(mode==='run'){ sdot.style.background='var(--r)'; sdot.style.boxShadow='0 0 0 4px rgba(230,27,35,.14)'; return; }
+    if(mode==='stop'){ sdot.style.background='var(--g)'; sdot.style.boxShadow='0 0 0 4px rgba(0,176,80,.14)'; return; }
+    sdot.style.background='var(--b)'; sdot.style.boxShadow='0 0 0 4px rgba(0,87,255,.14)';
+  }
+  function formatTime(ms){ return (ms/1000).toFixed(2); }
+  function tick(){
+    if(!running) return;
+    timeDisplay.textContent = formatTime(performance.now()-startTime);
+    raf = requestAnimationFrame(tick);
+  }
+  function averageTrimmed(arr){
+    if(arr.length < 5) return null;
+    const sorted=[...arr].sort((a,b)=>a-b);
+    sorted.shift(); sorted.pop();
+    return sorted.reduce((s,x)=>s+x,0)/sorted.length;
+  }
+  function computeStats(){
+    const times=solves.map(s=>s.t);
+    const v5=times.length>=5? averageTrimmed(times.slice(0,5)) : null;
+    const v12=times.length>=12? averageTrimmed(times.slice(0,12)) : null;
+    ao5.value = v5===null? '—' : v5.toFixed(2);
+    ao12.value = v12===null? '—' : v12.toFixed(2);
+  }
+  function saveSolves(){ localStorage.setItem(LS_SOLVES, JSON.stringify(solves)); }
+  function loadSolves(){
+    try{
+      const raw=localStorage.getItem(LS_SOLVES);
+      solves = raw ? JSON.parse(raw) : [];
+      if(!Array.isArray(solves)) solves=[];
+    }catch(e){ solves=[]; }
+    computeStats();
+  }
+  function addSolve(ms){
+    solves.unshift({ t: ms/1000 });
+    solves = solves.slice(0, 50);
+    saveSolves();
+    computeStats();
+  }
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.code!=='Space') return;
+    e.preventDefault();
+    if(!running){
+      if(!armed){ armed=true; setStatus('Hold… release to start','arm'); }
+    }else{
+      running=false; cancelAnimationFrame(raf);
+      const elapsed=performance.now()-startTime;
+      timeDisplay.textContent=formatTime(elapsed);
+      setStatus('Stopped (saved)','stop');
+      addSolve(elapsed);
+    }
+  }, { passive:false });
+
+  document.addEventListener('keyup', (e)=>{
+    if(e.code!=='Space') return;
+    e.preventDefault();
+    if(armed && !running){
+      armed=false; running=true; startTime=performance.now();
+      setStatus('Running… press Space to stop','run');
+      tick();
+    }else if(!running){
+      armed=false; setStatus('Ready','ready');
+    }
+  }, { passive:false });
+
+  document.getElementById('clearBtn').addEventListener('click', ()=>{
+    if(!confirm('Clear saved solves on this device?')) return;
+    solves=[]; saveSolves(); computeStats();
+    timeDisplay.textContent='0.00';
+    setStatus('Ready','ready');
+  });
+
+  // ---------- Init ----------
+  loadSolves();
+  setActiveMethod('cfop');
+  await generateScramble();
+</script>
+</body>
+</html>
