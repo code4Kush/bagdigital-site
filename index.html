@@ -1,111 +1,607 @@
-======<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BAG DIGITAL | Beaufort SC Websites, Automation & Business Systems</title>
-  <meta name="description" content="Fixed-scope websites, automation, and digital setup for Beaufort & Lowcountry businesses. No retainers. No hourly billing. Clear outcomes on a fixed timeline.">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>BAGDigital.tech — Cubing Tools + Google Workspace Automations</title>
 
-  <meta property="og:title" content="BAG DIGITAL | Beaufort SC Websites, Automation & Systems">
-  <meta property="og:description" content="Fixed-scope websites and automation for Beaufort & Lowcountry businesses. No retainers. No hourly billing.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://bagdigital.tech/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <script type="module" src="https://cdn.cubing.net/v0/js/cubing/twisty"></script>
+  <script type="module">import 'https://unpkg.com/@material/web/all.js?module';</script>
+
+  <style>
+    :root{
+      --b:#0047FF; --bg:#FFFFFF; --ink:#000000; --muted:#333333;
+      --panel:#F4F7FF; --r24:24px;
+      font-family:'Roboto',sans-serif;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--ink);line-height:1.55;}
+    .container{max-width:1100px;margin:0 auto;padding:0 16px;}
+
+    header{
+      padding:14px 0;border-bottom:1px solid #EEE;background:#fff;
+      position:sticky;top:0;z-index:10;
+    }
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+    .brand{font-size:1.45rem;font-weight:900;letter-spacing:-1px;white-space:nowrap;}
+    .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+
+    .hero{
+      padding:34px 0 18px;
+      display:grid;grid-template-columns:1.1fr 0.9fr;gap:26px;align-items:center;
+    }
+    @media (max-width:900px){.hero{grid-template-columns:1fr;}}
+    .kicker{color:var(--b);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin:0 0 10px;}
+    .hero h1{font-size:clamp(2.1rem,6vw,3.4rem);font-weight:900;margin:0;line-height:1.06;letter-spacing:-2px;}
+    .hero p{margin:12px 0 0;font-size:1.03rem;}
+    .hero-img{
+      height:300px;border-radius:var(--r24);
+      background:url('https://images.unsplash.com/photo-1605379399642-870262d3d051?auto=format&fit=crop&w=1400&q=80') center/cover;
+      box-shadow:0 16px 34px rgba(0,0,0,0.14);border:1px solid #ddd;
+    }
+    @media (max-width:900px){.hero-img{height:220px;}}
+
+    .tool-section{
+      background:var(--panel);padding:18px;border-radius:var(--r24);
+      margin:18px 0 18px;border:3px solid #E0E4FF;
+    }
+    .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
+    select#eventSelect{
+      flex:1;min-width:190px;height:52px;border-radius:12px;border:3px solid var(--ink);
+      background:#FFF;font-size:1.05rem;font-weight:900;padding:0 12px;cursor:pointer;
+    }
+    .scramble{
+      background:#000;color:#00FF41;padding:16px;border-radius:12px;
+      font-family:'Courier New',monospace;font-size:1.05rem;min-height:56px;
+      border:2px solid #333;word-wrap:break-word;text-align:center;
+    }
+    .viz-box{
+      min-height:260px;display:flex;justify-content:center;align-items:center;
+      background:#FFF;border-radius:15px;margin:14px 0;border:1px solid #CCC;padding:10px;
+    }
+    twisty-player{width:100%;height:260px;}
+    @media (min-width:900px){
+      .viz-box{min-height:320px;}
+      twisty-player{height:320px;}
+    }
+
+    /* Keep timer area stable so stopping doesn't visually "jump" */
+    .timer-zone{
+      background:#fff;border:1px solid #E7E7E7;border-radius:16px;
+      padding:14px;margin-top:12px;
+    }
+    .timer{
+      font-size:clamp(3.2rem,12vw,6rem);
+      font-weight:900;text-align:center;margin:4px 0 0;
+      font-variant-numeric:tabular-nums;
+    }
+    .timer-meta{
+      display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+      font-weight:800;color:var(--muted);margin-top:8px;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;border:1px solid #DDD;background:#fff;
+      font-weight:900;color:#000;
+    }
+    .pill strong{color:var(--b);}
+    .tip{margin:10px 0 0;text-align:center;color:var(--muted);font-weight:700;}
+
+    .tool-cta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px;}
+    .tool-proof{margin:10px 0 0;text-align:center;font-weight:800;}
+
+    .session{
+      margin-top:14px;background:#fff;border:1px solid #E7E7E7;border-radius:16px;overflow:hidden;
+    }
+    .session-head{
+      padding:12px 12px;border-bottom:1px solid #EEE;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    .session-head h3{margin:0;font-size:1.05rem;}
+    .session-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+    .table-wrap{overflow:auto;}
+    table{width:100%;border-collapse:collapse;min-width:560px;}
+    th,td{padding:10px 12px;border-bottom:1px solid #F0F0F0;text-align:left;white-space:nowrap;}
+    th{font-size:0.9rem;color:#222;text-transform:uppercase;letter-spacing:0.7px;}
+    td{font-weight:800;}
+    td.mono{font-family:'Courier New',monospace;font-weight:900;}
+    .empty{padding:12px;color:var(--muted);font-weight:800;}
+
+    .offers{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:14px;margin:18px 0 40px;
+    }
+    .card{
+      background:#fff;padding:18px;border-radius:18px;border:1px solid #EEE;
+      box-shadow:0 8px 18px rgba(0,0,0,0.06);
+    }
+    .card h3{margin:0 0 8px;font-size:1.2rem;}
+    .card ul{margin:0 0 10px;padding-left:18px;}
+    .card li{margin:6px 0;}
+    .meta{font-weight:900;color:var(--ink);}
+    .price{font-weight:900;color:var(--b);}
+    .small{color:var(--muted);font-weight:700;margin:0;}
+
+    .contact{
+      background:#000;color:#FFF;padding:60px 0;border-radius:34px 34px 0 0;margin-top:8px;
+    }
+    .form-box{max-width:560px;margin:0 auto;}
+    .contact h2{margin:0 0 14px;text-align:center;font-size:1.9rem;letter-spacing:-1px;}
+    input, select.form-input, textarea{
+      width:100%;padding:14px;margin-bottom:12px;border-radius:10px;
+      border:2px solid #444;background:#111;color:#FFF;font-size:1rem;
+    }
+    textarea{resize:vertical;}
+    .btn{width:100%;padding:16px;background:var(--b);color:#FFF;border:none;border-radius:10px;font-weight:900;cursor:pointer;}
+    .btn:disabled{opacity:0.65;cursor:not-allowed;}
+    .status{margin-top:12px;text-align:center;font-weight:900;}
+    .fineprint{margin:10px 0 0;text-align:center;color:#BDBDBD;font-weight:700;font-size:0.95rem;}
+
+    @media (max-width:420px){
+      .brand{font-size:1.25rem;}
+      select#eventSelect{min-width:160px;}
+      table{min-width:520px;}
+    }
+  </style>
 </head>
-<body class="theme-agency">
-  <nav class="nav-bar">
-    <div class="container flex-between">
-      <div class="logo">BAG <span class="accent-text">DIGITAL</span></div>
-      <div class="nav-links">
-        <a href="#core">Services</a>
-        <a href="#packages">Packages</a>
-        <a href="#labs">Labs</a>
-        <a href="#contact" class="pill-btn">Start Project</a>
-      </div>
-    </div>
-  </nav>
 
-  <aside class="theme-dock-wrapper">
-    <div id="theme-dock" class="theme-dock" aria-label="Theme selector"></div>
-  </aside>
-
-  <header class="hero" id="hero-section" role="banner">
-    <div class="hero-overlay"></div>
-    <div class="container hero-inner">
-      <h1 id="hero-h1">--</h1>
-      <p id="hero-p">--</p>
-      <div class="hero-btns">
-        <a href="#contact" class="btn primary">Inquire Now</a>
-        <a href="#labs" class="btn secondary">View Labs</a>
+<body>
+  <header>
+    <div class="container topbar">
+      <strong class="brand">BAGDigital<span style="color:var(--b);">.tech</span></strong>
+      <div class="top-actions">
+        <md-outlined-button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          Work With Me
+        </md-outlined-button>
+        <md-filled-button onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">
+          Scrambler
+        </md-filled-button>
       </div>
-      <p class="scope-rule" id="scope-rule">--</p>
     </div>
   </header>
 
-  <main class="container" role="main">
-    <div class="process-strip">
-      <span class="accent-text">PROCESS:</span> SELECT → INTAKE → BUILD → DELIVERY
-    </div>
+  <div class="container">
+    <section class="hero">
+      <div>
+        <p class="kicker">Free Cubing Tools</p>
+        <h1>Practice Fast.<br>Build Faster.</h1>
+        <p>
+          BAG Digital is an MVP studio starting from zero clients.<br>
+          I build <span style="font-weight:900;">Google Workspace + Apps Script</span> automations and simple websites that reduce admin work and missed leads.
+        </p>
+      </div>
+      <div class="hero-img" aria-label="Hero image"></div>
+    </section>
 
-    <section class="section">
+    <section id="tool" class="tool-section" aria-label="Cubing scrambler and timer">
+      <div class="controls">
+        <select id="eventSelect" aria-label="Select event">
+          <option value="222">2x2x2</option>
+          <option value="333" selected>3x3x3</option>
+          <option value="444">4x4x4</option>
+          <option value="555">5x5x5</option>
+          <option value="666">6x6x6</option>
+          <option value="777">7x7x7</option>
+          <option value="sq1">Square-1</option>
+          <option value="pyram">Pyraminx</option>
+          <option value="minx">Megaminx</option>
+          <option value="skewb">Skewb</option>
+          <option value="clock">Clock</option>
+        </select>
+
+        <md-outlined-button id="newScrambleBtn">Next Scramble</md-outlined-button>
+      </div>
+
+      <div class="scramble" id="scrambleText">Connecting...</div>
+
+      <div class="viz-box">
+        <twisty-player id="player" background="none" control-panel="none" visualization="2D"></twisty-player>
+      </div>
+
+      <div class="timer-zone">
+        <div class="timer" id="timeDisplay">0.00</div>
+
+        <div class="timer-meta">
+          <span class="pill">Event: <strong id="eventLabel">3x3x3</strong></span>
+          <span class="pill">Last: <strong id="lastTime">—</strong></span>
+          <span class="pill">Best: <strong id="bestTime">—</strong></span>
+        </div>
+
+        <p class="tip">
+          Press <strong>Space</strong> to start/stop. Tap <strong>Start</strong>/<strong>Stop</strong> on mobile.
+          Stopping logs your time + event (no page jumping).
+        </p>
+
+        <div class="tool-cta">
+          <md-filled-button id="startStopBtn">Start</md-filled-button>
+          <md-outlined-button id="newSolveScrambleBtn">New Scramble</md-outlined-button>
+          <md-outlined-button id="resetSessionBtn">Clear Session</md-outlined-button>
+        </div>
+      </div>
+
+      <p class="tool-proof">
+        Want this kind of speed and reliability in your business ops? See what I build below.
+      </p>
+
+      <div class="session" aria-label="Session log">
+        <div class="session-head">
+          <h3>Session Log</h3>
+          <div class="session-actions">
+            <md-outlined-button id="copyCsvBtn">Copy CSV</md-outlined-button>
+            <md-outlined-button id="downloadCsvBtn">Download CSV</md-outlined-button>
+            <md-outlined-button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+              Contact
+            </md-outlined-button>
+          </div>
+        </div>
+        <div class="table-wrap" id="tableWrap">
+          <div class="empty" id="emptyState">No solves yet. Start then stop to log a solve.</div>
+          <table id="sessionTable" style="display:none;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Event</th>
+                <th>Time (s)</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="sessionBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="offers" class="offers" aria-label="Services">
       <div class="card">
-        <div class="price-tag">Beaufort / Lowcountry</div>
-        <h3>Built for small teams that need clarity</h3>
-        <p>Contractors, guides, studios, shops, and service businesses in Beaufort need simple systems that reduce admin and increase bookings. Fixed scope. Fixed price. No retainers.</p>
-        <a class="select-link" href="#contact">Start Project</a>
+        <h3>Lead Intake Automation</h3>
+        <ul>
+          <li>Form → Google Sheet pipeline</li>
+          <li>Instant notifications (email; SMS optional)</li>
+          <li>Simple follow-up workflow</li>
+        </ul>
+        <p class="small"><span class="meta">Starting at:</span> <span class="price">$750</span></p>
+        <p class="small"><span class="meta">Best for:</span> missed leads, slow follow-up</p>
+      </div>
+
+      <div class="card">
+        <h3>Basic Website + Contact</h3>
+        <ul>
+          <li>One-page, fast, mobile-first</li>
+          <li>Contact form + lead tracking</li>
+          <li>Deploy on your domain</li>
+        </ul>
+        <p class="small"><span class="meta">Starting at:</span> <span class="price">$600</span></p>
+        <p class="small"><span class="meta">Best for:</span> “I need a site that works.”</p>
+      </div>
+
+      <div class="card">
+        <h3>Ops Automation (Small System)</h3>
+        <ul>
+          <li>Tracking + dashboards</li>
+          <li>Status workflow + audit trail</li>
+          <li>Google Workspace-native</li>
+        </ul>
+        <p class="small"><span class="meta">Starting at:</span> <span class="price">$1,500</span></p>
+        <p class="small"><span class="meta">Best for:</span> teams, studios, shops</p>
       </div>
     </section>
+  </div>
 
-    <section id="core" class="section">
-      <h2 class="section-label">01 // SERVICES, PRODUCTS & PRICING</h2>
-      <div id="core-grid" class="grid-display"></div>
-      <p class="micro-note">All projects are fixed-price and fixed-scope. If scope changes, we re-quote. No retainers.</p>
-    </section>
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="form-box">
+        <h2>Request a Fast Audit</h2>
 
-    <section id="packages" class="section">
-      <h2 class="section-label">02 // PACKAGES</h2>
-      <div id="package-grid" class="grid-display"></div>
-    </section>
+        <form id="leadForm">
+          <input type="text" name="website" tabindex="-1" autocomplete="off"
+                 style="position:absolute; left:-9999px; height:1px; width:1px; opacity:0;" />
 
-    <section id="labs" class="section">
-      <h2 class="section-label">03 // DESIGN LABS</h2>
-      <p class="section-intro">Short prototypes that show structure, workflow, and conversion strategy—tailored to how Beaufort businesses actually operate.</p>
-      <div id="lab-grid" class="grid-display"></div>
-      <p class="micro-note">These labs are examples of approach. If you want one adapted to your business, select a service/package and describe your goals.</p>
-    </section>
+          <input type="text" name="name" placeholder="Name / Business" required>
+          <input type="email" name="email" placeholder="Email Address" required>
 
-    <section id="contact" class="section">
-      <div class="form-card">
-        <h2>Start Your Project</h2>
-        <form id="contact-form">
-          <div class="form-row">
-            <input type="text" id="name" placeholder="Full Name" autocomplete="name" required>
-            <input type="email" id="email" placeholder="Email Address" autocomplete="email" required>
-          </div>
-          <div class="form-row">
-            <select id="service" required>
-              <option value="" disabled selected>Select service or package</option>
-            </select>
-            <select id="timeline" required>
-              <option value="" disabled selected>Timeline</option>
-              <option value="ASAP">ASAP (7–14 Days)</option>
-              <option value="Standard">Standard (14+ Days)</option>
-            </select>
-          </div>
-          <textarea id="message" placeholder="What business problem are we solving? (Bookings, admin overload, inventory, website clarity, etc.)" rows="4" required></textarea>
-          <button type="submit" id="submit-btn" class="btn primary full-width">Send Project Brief</button>
-          <p class="form-footnote">You’ll get a reply with next steps and a short intake checklist.</p>
+          <select name="service" class="form-input" aria-label="Select service">
+            <option value="Lead Intake">Lead Intake Automation</option>
+            <option value="Website">Basic Website + Contact</option>
+            <option value="Automation">Ops Automation (Small System)</option>
+          </select>
+
+          <textarea name="message" rows="4" placeholder="What are you trying to automate or fix? (lead capture, follow-up, tracking, scheduling, inventory, etc.)"></textarea>
+
+          <button type="submit" class="btn" id="subBtn">Send</button>
         </form>
+
+        <div id="status" class="status"></div>
+        <p class="fineprint">I reply with next steps and a simple plan. No retainer required.</p>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="footer container" role="contentinfo">
-    <p id="footer-line">BAG DIGITAL // BEAUFORT, SOUTH CAROLINA</p>
-  </footer>
+  <!-- Scrambler -->
+  <script type="module">
+    import { randomScrambleForEvent } from "https://cdn.cubing.net/v0/js/cubing/scramble";
 
-  <script src="app.js" defer></script>
+    const player = document.getElementById('player');
+    const scrambleText = document.getElementById('scrambleText');
+    const eventSelect = document.getElementById('eventSelect');
+    const eventLabel = document.getElementById('eventLabel');
+
+    const puzzleMap = {
+      "333": "3x3x3", "222": "2x2x2", "444": "4x4x4", "555": "5x5x5", "666": "6x6x6", "777": "7x7x7",
+      "sq1": "square1", "pyram": "pyraminx", "minx": "megaminx", "skewb": "skewb", "clock": "clock"
+    };
+
+    const eventNames = {
+      "222": "2x2x2", "333": "3x3x3", "444": "4x4x4", "555": "5x5x5", "666": "6x6x6", "777": "7x7x7",
+      "sq1": "Square-1", "pyram": "Pyraminx", "minx": "Megaminx", "skewb": "Skewb", "clock": "Clock"
+    };
+
+    function setEventLabel() {
+      eventLabel.textContent = eventNames[eventSelect.value] || eventSelect.value;
+    }
+
+    async function updateScramble() {
+      const ev = eventSelect.value;
+      setEventLabel();
+      scrambleText.innerText = "Syncing...";
+      try {
+        const alg = await randomScrambleForEvent(ev);
+        const str = alg.toString();
+        scrambleText.innerText = str;
+
+        player.puzzle = puzzleMap[ev];
+        player.alg = str;
+      } catch (e) {
+        scrambleText.innerText = "Error. Please refresh.";
+      }
+    }
+
+    document.getElementById('newScrambleBtn').onclick = updateScramble;
+    document.getElementById('newSolveScrambleBtn').onclick = updateScramble;
+    eventSelect.onchange = updateScramble;
+
+    updateScramble();
+  </script>
+
+  <!-- Timer + session logging (NO auto-scroll, NO auto-scramble on stop) -->
+  <script>
+    const timeDisplay = document.getElementById('timeDisplay');
+    const startStopBtn = document.getElementById('startStopBtn');
+    const resetSessionBtn = document.getElementById('resetSessionBtn');
+
+    const lastTimeEl = document.getElementById('lastTime');
+    const bestTimeEl = document.getElementById('bestTime');
+
+    const sessionTable = document.getElementById('sessionTable');
+    const sessionBody = document.getElementById('sessionBody');
+    const emptyState = document.getElementById('emptyState');
+
+    const copyCsvBtn = document.getElementById('copyCsvBtn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+
+    const eventSelect = document.getElementById('eventSelect');
+
+    const eventNames = {
+      "222": "2x2x2", "333": "3x3x3", "444": "4x4x4", "555": "5x5x5", "666": "6x6x6", "777": "7x7x7",
+      "sq1": "Square-1", "pyram": "Pyraminx", "minx": "Megaminx", "skewb": "Skewb", "clock": "Clock"
+    };
+
+    let running = false;
+    let startTime = 0;
+    let interval = null;
+
+    // Stored for lead context if desired (client-side only)
+    window.__bagLastSolve = null;
+
+    let session = [];
+
+    function fmtTime(sec){ return Number(sec).toFixed(2); }
+
+    function updateBestAndLast(){
+      if(session.length === 0){
+        lastTimeEl.textContent = "—";
+        bestTimeEl.textContent = "—";
+        return;
+      }
+      const last = session[session.length - 1];
+      lastTimeEl.textContent = `${fmtTime(last.timeSec)}s`;
+
+      const best = session.reduce((m,x)=>Math.min(m,x.timeSec), Infinity);
+      bestTimeEl.textContent = `${fmtTime(best)}s`;
+    }
+
+    function renderTable(){
+      if(session.length === 0){
+        emptyState.style.display = "block";
+        sessionTable.style.display = "none";
+        sessionBody.innerHTML = "";
+        return;
+      }
+      emptyState.style.display = "none";
+      sessionTable.style.display = "table";
+
+      sessionBody.innerHTML = session.map((row) => {
+        const when = new Date(row.tsIso).toLocaleString();
+        return `
+          <tr>
+            <td>${row.n}</td>
+            <td>${row.eventName}</td>
+            <td class="mono">${fmtTime(row.timeSec)}</td>
+            <td>${when}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function getCsv(){
+      const header = ["solve","event","time_seconds","timestamp_iso"];
+      const lines = session.map(r => [r.n, r.eventName, fmtTime(r.timeSec), r.tsIso].join(","));
+      return [header.join(","), ...lines].join("\n");
+    }
+
+    async function copyCsv(){
+      if(session.length === 0) return;
+      try{
+        await navigator.clipboard.writeText(getCsv());
+        copyCsvBtn.textContent = "Copied";
+        setTimeout(()=>copyCsvBtn.textContent="Copy CSV", 900);
+      }catch{
+        copyCsvBtn.textContent = "Copy failed";
+        setTimeout(()=>copyCsvBtn.textContent="Copy CSV", 900);
+      }
+    }
+
+    function downloadCsv(){
+      if(session.length === 0) return;
+      const blob = new Blob([getCsv()], {type:"text/csv;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "bagdigital_cubing_session.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function startTimer(){
+      if(running) return;
+      running = true;
+      startStopBtn.textContent = "Stop";
+      startTime = performance.now();
+      interval = setInterval(() => {
+        timeDisplay.textContent = ((performance.now() - startTime) / 1000).toFixed(2);
+      }, 10);
+    }
+
+    function stopTimerAndLog(){
+      if(!running) return;
+      running = false;
+      clearInterval(interval);
+      interval = null;
+
+      const elapsed = (performance.now() - startTime) / 1000;
+      const elapsedFixed = Number(elapsed.toFixed(2));
+
+      timeDisplay.textContent = elapsedFixed.toFixed(2);
+      startStopBtn.textContent = "Start";
+
+      const eventCode = eventSelect.value;
+      const eventName = eventNames[eventCode] || eventCode;
+
+      const entry = {
+        n: session.length + 1,
+        eventCode,
+        eventName,
+        timeSec: elapsedFixed,
+        tsIso: new Date().toISOString()
+      };
+
+      session.push(entry);
+      window.__bagLastSolve = entry; // for form context if you want it later
+
+      updateBestAndLast();
+      renderTable();
+
+      // IMPORTANT: no auto-scramble here. User chooses "New Scramble".
+    }
+
+    function toggleTimer(){
+      if(running) stopTimerAndLog();
+      else startTimer();
+    }
+
+    function clearSession(){
+      running = false;
+      if(interval) clearInterval(interval);
+      interval = null;
+
+      session = [];
+      timeDisplay.textContent = "0.00";
+      startStopBtn.textContent = "Start";
+      window.__bagLastSolve = null;
+
+      updateBestAndLast();
+      renderTable();
+    }
+
+    // Button controls (mobile-friendly)
+    startStopBtn.addEventListener("click", (e) => {
+      // prevent focus-related scroll quirks on some mobile browsers
+      e.preventDefault();
+      startStopBtn.blur();
+      toggleTimer();
+    });
+    resetSessionBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      resetSessionBtn.blur();
+      clearSession();
+    });
+    copyCsvBtn.addEventListener("click", copyCsv);
+    downloadCsvBtn.addEventListener("click", downloadCsv);
+
+    // Spacebar control (desktop)
+    window.addEventListener("keydown", (e) => {
+      if(e.code !== "Space") return;
+      if(["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName)) return;
+      e.preventDefault();
+      toggleTimer();
+    });
+
+    updateBestAndLast();
+    renderTable();
+  </script>
+
+  <!-- Lead form submit -> Google Apps Script Web App (server unchanged) -->
+  <script>
+    const LEAD_ENDPOINT = "https://script.google.com/macros/s/AKfycbyXBZI3EMxmo3jS0VKhwiky9fVrgiOGGrm3EpYM-WS7v2ZEGkZ8tTODIKno8HhJ00jsew/exec"; // <-- paste your deployed URL
+    const HONEYPOT_NAME = "website";
+
+    const form = document.getElementById("leadForm");
+    const statusEl = document.getElementById("status");
+    const subBtn = document.getElementById("subBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "";
+      subBtn.disabled = true;
+      subBtn.textContent = "Sending...";
+
+      const fd = new FormData(form);
+
+      if ((fd.get(HONEYPOT_NAME) || "").toString().trim().length > 0) {
+        subBtn.disabled = false;
+        subBtn.textContent = "Send";
+        return;
+      }
+
+      fd.append("source", "cubing-tools");
+      fd.append("pageTitle", document.title);
+      fd.append("timestamp", new Date().toISOString());
+      fd.append("userAgent", navigator.userAgent);
+
+      // Attach last solve context (optional; script will just store extra columns if you add them later)
+      if (window.__bagLastSolve) {
+        fd.append("lastSolveEvent", window.__bagLastSolve.eventName);
+        fd.append("lastSolveTimeSec", String(window.__bagLastSolve.timeSec));
+      }
+
+      try {
+        const res = await fetch(LEAD_ENDPOINT, { method: "POST", body: fd });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error("Bad response");
+
+        statusEl.textContent = "Received. I’ll reply soon.";
+        form.reset();
+      } catch (err) {
+        statusEl.textContent = "Error sending. Please email Jaime@bagdigital.tech.";
+      } finally {
+        subBtn.disabled = false;
+        subBtn.textContent = "Send";
+      }
+    });
+  </script>
+
 </body>
 </html>
