@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>BAGDigital.tech — Cubing Tools + Google Workspace Automations</title>
+  <title>BAGDigital.tech — Competition Day Tools</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
@@ -17,64 +17,64 @@
       --panel:#F4F7FF; --r24:24px;
       font-family:'Roboto',sans-serif;
     }
-    *{box-sizing:border-box;}
+    *{box-sizing:border-box; max-width:100%;}
+    html,body{width:100%; overflow-x:hidden;}
     body{margin:0;background:var(--bg);color:var(--ink);line-height:1.55;}
     .container{max-width:1100px;margin:0 auto;padding:0 16px;}
 
     header{
-      padding:14px 0;border-bottom:1px solid #EEE;background:#fff;
+      padding:12px 0;border-bottom:1px solid #EEE;background:#fff;
       position:sticky;top:0;z-index:10;
     }
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
-    .brand{font-size:1.45rem;font-weight:900;letter-spacing:-1px;white-space:nowrap;}
+    .brand{font-size:1.35rem;font-weight:900;letter-spacing:-1px;white-space:nowrap;}
     .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 
-    .hero{
-      padding:34px 0 18px;
-      display:grid;grid-template-columns:1.1fr 0.9fr;gap:26px;align-items:center;
+    /* On competition day, keep it tight and scannable */
+    .hero{padding:16px 0 10px;display:grid;grid-template-columns:1fr;gap:10px;}
+    .kicker{color:var(--b);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin:0;}
+    .hero h1{font-size:clamp(1.85rem,6vw,2.75rem);font-weight:900;margin:0;line-height:1.06;letter-spacing:-1.25px;}
+    .hero p{margin:6px 0 0;font-size:1.02rem;}
+    .hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:999px;border:1px solid #DDD;background:#fff;
+      font-weight:900;color:#000;
     }
-    @media (max-width:900px){.hero{grid-template-columns:1fr;}}
-    .kicker{color:var(--b);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin:0 0 10px;}
-    .hero h1{font-size:clamp(2.1rem,6vw,3.4rem);font-weight:900;margin:0;line-height:1.06;letter-spacing:-2px;}
-    .hero p{margin:12px 0 0;font-size:1.03rem;}
-    .hero-img{
-      height:300px;border-radius:var(--r24);
-      background:url('https://images.unsplash.com/photo-1605379399642-870262d3d051?auto=format&fit=crop&w=1400&q=80') center/cover;
-      box-shadow:0 16px 34px rgba(0,0,0,0.14);border:1px solid #ddd;
-    }
-    @media (max-width:900px){.hero-img{height:220px;}}
+    .badge strong{color:var(--b);}
 
+    /* Tool */
     .tool-section{
-      background:var(--panel);padding:18px;border-radius:var(--r24);
-      margin:18px 0 18px;border:3px solid #E0E4FF;
+      background:var(--panel);padding:16px;border-radius:var(--r24);
+      margin:10px 0 12px;border:3px solid #E0E4FF;
     }
-    .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
     select#eventSelect{
-      flex:1;min-width:190px;height:52px;border-radius:12px;border:3px solid var(--ink);
-      background:#FFF;font-size:1.05rem;font-weight:900;padding:0 12px;cursor:pointer;
+      flex:1;min-width:160px;height:50px;border-radius:12px;border:3px solid var(--ink);
+      background:#FFF;font-size:1.02rem;font-weight:900;padding:0 12px;cursor:pointer;
     }
     .scramble{
-      background:#000;color:#00FF41;padding:16px;border-radius:12px;
-      font-family:'Courier New',monospace;font-size:1.05rem;min-height:56px;
+      background:#000;color:#00FF41;padding:14px;border-radius:12px;
+      font-family:'Courier New',monospace;font-size:1.02rem;min-height:54px;
       border:2px solid #333;word-wrap:break-word;text-align:center;
     }
     .viz-box{
-      min-height:260px;display:flex;justify-content:center;align-items:center;
-      background:#FFF;border-radius:15px;margin:14px 0;border:1px solid #CCC;padding:10px;
+      background:#FFF;border-radius:15px;margin:12px 0;border:1px solid #CCC;padding:10px;
+      display:flex;justify-content:center;align-items:center;
+      height:260px; /* fixed so nothing "resizes" */
     }
-    twisty-player{width:100%;height:260px;}
+    twisty-player{width:100%;height:240px;}
     @media (min-width:900px){
-      .viz-box{min-height:320px;}
-      twisty-player{height:320px;}
+      .viz-box{height:300px;}
+      twisty-player{height:280px;}
     }
 
-    /* Keep timer area stable so stopping doesn't visually "jump" */
     .timer-zone{
       background:#fff;border:1px solid #E7E7E7;border-radius:16px;
-      padding:14px;margin-top:12px;
+      padding:12px;margin-top:10px;
     }
     .timer{
-      font-size:clamp(3.2rem,12vw,6rem);
+      font-size:clamp(3.0rem,12vw,5.6rem);
       font-weight:900;text-align:center;margin:4px 0 0;
       font-variant-numeric:tabular-nums;
     }
@@ -91,59 +91,98 @@
     .tip{margin:10px 0 0;text-align:center;color:var(--muted);font-weight:700;}
 
     .tool-cta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px;}
-    .tool-proof{margin:10px 0 0;text-align:center;font-weight:800;}
 
+    /* Organizer */
+    .organizer{
+      background:#fff;border:1px solid #EEE;border-radius:20px;
+      padding:16px;margin:12px 0 14px;
+      box-shadow:0 8px 18px rgba(0,0,0,0.05);
+    }
+    .organizer h2{margin:0 0 6px;font-size:1.35rem;letter-spacing:-0.5px;}
+    .organizer p{margin:0 0 10px;color:var(--muted);font-weight:700;}
+    .org-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:10px;}
+    .org-card{border:1px solid #EEE;border-radius:16px;padding:14px;background:#fff;}
+    .org-card h3{margin:0 0 8px;font-size:1.05rem;}
+    .checklist{margin:0;padding-left:18px;}
+    .checklist li{margin:8px 0;font-weight:800;}
+
+    /* No resize handles anywhere */
+    textarea{resize:none !important;}
+
+    .note{
+      width:100%;
+      height:140px; /* fixed height; no resize needed */
+      overflow:auto;
+      padding:12px;border-radius:12px;border:2px solid #DDD;
+      font-weight:800;font-size:1rem;
+    }
+    .smallmuted{margin:8px 0 0;color:var(--muted);font-weight:700;}
+    .mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+
+    /* Session log — table on desktop, cards on mobile. No horizontal scrolling. */
     .session{
-      margin-top:14px;background:#fff;border:1px solid #E7E7E7;border-radius:16px;overflow:hidden;
+      margin-top:12px;background:#fff;border:1px solid #E7E7E7;border-radius:16px;overflow:hidden;
     }
     .session-head{
-      padding:12px 12px;border-bottom:1px solid #EEE;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      padding:12px 12px;border-bottom:1px solid #EEE;
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
     }
     .session-head h3{margin:0;font-size:1.05rem;}
     .session-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
-    .table-wrap{overflow:auto;}
-    table{width:100%;border-collapse:collapse;min-width:560px;}
-    th,td{padding:10px 12px;border-bottom:1px solid #F0F0F0;text-align:left;white-space:nowrap;}
+    .empty{padding:12px;color:var(--muted);font-weight:800;}
+
+    table{width:100%;border-collapse:collapse;}
+    th,td{padding:10px 12px;border-bottom:1px solid #F0F0F0;text-align:left;}
     th{font-size:0.9rem;color:#222;text-transform:uppercase;letter-spacing:0.7px;}
     td{font-weight:800;}
     td.mono{font-family:'Courier New',monospace;font-weight:900;}
-    .empty{padding:12px;color:var(--muted);font-weight:800;}
 
+    /* Mobile: switch to card list (no resize, no scroll) */
+    .solve-cards{display:none; padding:12px; gap:10px;}
+    .solve-card{
+      border:1px solid #EEE;border-radius:14px;padding:12px;background:#fff;
+      display:grid;grid-template-columns:1fr 1fr;gap:8px;
+    }
+    .solve-card .label{color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:0.6px;font-size:0.8rem;}
+    .solve-card .value{font-weight:900;}
+    .solve-card .mono{font-family:'Courier New',monospace;}
+
+    @media (max-width:640px){
+      table{display:none;}
+      .solve-cards{display:grid;}
+    }
+
+    /* Offers */
     .offers{
       display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:14px;margin:18px 0 40px;
+      gap:14px;margin:14px 0 34px;
     }
     .card{
-      background:#fff;padding:18px;border-radius:18px;border:1px solid #EEE;
+      background:#fff;padding:16px;border-radius:18px;border:1px solid #EEE;
       box-shadow:0 8px 18px rgba(0,0,0,0.06);
     }
-    .card h3{margin:0 0 8px;font-size:1.2rem;}
+    .card h3{margin:0 0 8px;font-size:1.15rem;}
     .card ul{margin:0 0 10px;padding-left:18px;}
-    .card li{margin:6px 0;}
+    .card li{margin:6px 0;font-weight:800;}
     .meta{font-weight:900;color:var(--ink);}
     .price{font-weight:900;color:var(--b);}
     .small{color:var(--muted);font-weight:700;margin:0;}
 
+    /* Contact */
     .contact{
-      background:#000;color:#FFF;padding:60px 0;border-radius:34px 34px 0 0;margin-top:8px;
+      background:#000;color:#FFF;padding:54px 0;border-radius:34px 34px 0 0;margin-top:8px;
     }
     .form-box{max-width:560px;margin:0 auto;}
-    .contact h2{margin:0 0 14px;text-align:center;font-size:1.9rem;letter-spacing:-1px;}
-    input, select.form-input, textarea{
+    .contact h2{margin:0 0 14px;text-align:center;font-size:1.75rem;letter-spacing:-1px;}
+    input, select.form-input, textarea.form-text{
       width:100%;padding:14px;margin-bottom:12px;border-radius:10px;
       border:2px solid #444;background:#111;color:#FFF;font-size:1rem;
     }
-    textarea{resize:vertical;}
+    textarea.form-text{height:130px; overflow:auto;}
     .btn{width:100%;padding:16px;background:var(--b);color:#FFF;border:none;border-radius:10px;font-weight:900;cursor:pointer;}
     .btn:disabled{opacity:0.65;cursor:not-allowed;}
     .status{margin-top:12px;text-align:center;font-weight:900;}
     .fineprint{margin:10px 0 0;text-align:center;color:#BDBDBD;font-weight:700;font-size:0.95rem;}
-
-    @media (max-width:420px){
-      .brand{font-size:1.25rem;}
-      select#eventSelect{min-width:160px;}
-      table{min-width:520px;}
-    }
   </style>
 </head>
 
@@ -152,11 +191,11 @@
     <div class="container topbar">
       <strong class="brand">BAGDigital<span style="color:var(--b);">.tech</span></strong>
       <div class="top-actions">
-        <md-outlined-button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-          Work With Me
+        <md-outlined-button onclick="document.getElementById('organizer').scrollIntoView({behavior:'smooth'})">
+          Organizer
         </md-outlined-button>
         <md-filled-button onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">
-          Scrambler
+          Timer
         </md-filled-button>
       </div>
     </div>
@@ -164,17 +203,17 @@
 
   <div class="container">
     <section class="hero">
-      <div>
-        <p class="kicker">Free Cubing Tools</p>
-        <h1>Practice Fast.<br>Build Faster.</h1>
-        <p>
-          BAG Digital is an MVP studio starting from zero clients.<br>
-          I build <span style="font-weight:900;">Google Workspace + Apps Script</span> automations and simple websites that reduce admin work and missed leads.
-        </p>
+      <p class="kicker">Competition Day</p>
+      <h1>Scrambles, Timer, and a Quick Organizer.</h1>
+      <p>Most people scanning this are already in the venue. Use this page to stay ready between rounds.</p>
+      <div class="hero-badges">
+        <span class="badge">Free: <strong>Always</strong></span>
+        <span class="badge">No login: <strong>Yes</strong></span>
+        <span class="badge">Built by: <strong>BAG Digital</strong></span>
       </div>
-      <div class="hero-img" aria-label="Hero image"></div>
     </section>
 
+    <!-- TOOL -->
     <section id="tool" class="tool-section" aria-label="Cubing scrambler and timer">
       <div class="controls">
         <select id="eventSelect" aria-label="Select event">
@@ -210,8 +249,7 @@
         </div>
 
         <p class="tip">
-          Press <strong>Space</strong> to start/stop. Tap <strong>Start</strong>/<strong>Stop</strong> on mobile.
-          Stopping logs your time + event (no page jumping).
+          Space = start/stop (desktop). Tap Start/Stop (mobile). Stopping logs event + time. Nothing resizes.
         </p>
 
         <div class="tool-cta">
@@ -221,38 +259,91 @@
         </div>
       </div>
 
-      <p class="tool-proof">
-        Want this kind of speed and reliability in your business ops? See what I build below.
-      </p>
-
       <div class="session" aria-label="Session log">
         <div class="session-head">
           <h3>Session Log</h3>
           <div class="session-actions">
             <md-outlined-button id="copyCsvBtn">Copy CSV</md-outlined-button>
             <md-outlined-button id="downloadCsvBtn">Download CSV</md-outlined-button>
-            <md-outlined-button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-              Contact
-            </md-outlined-button>
           </div>
         </div>
-        <div class="table-wrap" id="tableWrap">
-          <div class="empty" id="emptyState">No solves yet. Start then stop to log a solve.</div>
-          <table id="sessionTable" style="display:none;">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Event</th>
-                <th>Time (s)</th>
-                <th>Timestamp</th>
-              </tr>
-            </thead>
-            <tbody id="sessionBody"></tbody>
-          </table>
-        </div>
+
+        <div id="emptyState" class="empty">No solves yet. Start then stop to log a solve.</div>
+
+        <!-- Desktop table -->
+        <table id="sessionTable" style="display:none;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Event</th>
+              <th>Time (s)</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="sessionBody"></tbody>
+        </table>
+
+        <!-- Mobile cards -->
+        <div id="solveCards" class="solve-cards" aria-label="Mobile session cards"></div>
       </div>
     </section>
 
+    <!-- ORGANIZER -->
+    <section id="organizer" class="organizer" aria-label="Competition day organizer">
+      <h2>Competition Day Organizer (Cuber + Parent)</h2>
+      <p>Checklist + notes that save on your phone. No account. No resizing.</p>
+
+      <div class="org-grid">
+        <div class="org-card">
+          <h3>5-Minute Ready Check</h3>
+          <ul class="checklist">
+            <li><label><input type="checkbox" data-k="badge"> Badge / wristband / check-in done</label></li>
+            <li><label><input type="checkbox" data-k="cube"> Correct cube(s) for next event</label></li>
+            <li><label><input type="checkbox" data-k="tools"> Lube / screwdriver / cloth</label></li>
+            <li><label><input type="checkbox" data-k="water"> Water + snack</label></li>
+            <li><label><input type="checkbox" data-k="warmup"> Warm-up: 3–5 solves, then stop</label></li>
+          </ul>
+        </div>
+
+        <div class="org-card">
+          <h3>Parent Ops Checklist</h3>
+          <ul class="checklist">
+            <li><label><input type="checkbox" data-k="schedule"> Next event + group time known</label></li>
+            <li><label><input type="checkbox" data-k="quiet"> Quiet zone plan (lower stress)</label></li>
+            <li><label><input type="checkbox" data-k="food"> Food/hydration between rounds</label></li>
+            <li><label><input type="checkbox" data-k="ride"> End-time + ride plan confirmed</label></li>
+            <li><label><input type="checkbox" data-k="pics"> Photos after solves, not before</label></li>
+          </ul>
+        </div>
+
+        <div class="org-card">
+          <h3>My Notes (rounds / goals / reminders)</h3>
+          <textarea class="note" id="notes" placeholder="Example: 3x3 R1 — steady solves. Slow inspection. Breathe."></textarea>
+          <p class="smallmuted">Tip: one goal per event.</p>
+          <div class="mini-actions">
+            <md-outlined-button id="copyNotesBtn">Copy Notes</md-outlined-button>
+            <md-outlined-button id="clearNotesBtn">Clear Notes</md-outlined-button>
+          </div>
+        </div>
+
+        <div class="org-card">
+          <h3>Between-Rounds Plan</h3>
+          <ul class="checklist">
+            <li><strong>Right after:</strong> hydrate + reset mentally</li>
+            <li><strong>10–20 min:</strong> light snack, calm hands</li>
+            <li><strong>Last 10 min:</strong> no new algs, no panic</li>
+            <li><strong>Call time:</strong> cube legal, timer ok</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-actions" style="margin-top:12px;">
+        <md-filled-button id="resetOrganizerBtn">Reset Organizer</md-filled-button>
+        <md-outlined-button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Business Automation</md-outlined-button>
+      </div>
+    </section>
+
+    <!-- SERVICES (secondary) -->
     <section id="offers" class="offers" aria-label="Services">
       <div class="card">
         <h3>Lead Intake Automation</h3>
@@ -262,18 +353,16 @@
           <li>Simple follow-up workflow</li>
         </ul>
         <p class="small"><span class="meta">Starting at:</span> <span class="price">$750</span></p>
-        <p class="small"><span class="meta">Best for:</span> missed leads, slow follow-up</p>
       </div>
 
       <div class="card">
         <h3>Basic Website + Contact</h3>
         <ul>
-          <li>One-page, fast, mobile-first</li>
-          <li>Contact form + lead tracking</li>
+          <li>Fast, mobile-first one-page</li>
+          <li>Contact form + tracking</li>
           <li>Deploy on your domain</li>
         </ul>
         <p class="small"><span class="meta">Starting at:</span> <span class="price">$600</span></p>
-        <p class="small"><span class="meta">Best for:</span> “I need a site that works.”</p>
       </div>
 
       <div class="card">
@@ -284,15 +373,15 @@
           <li>Google Workspace-native</li>
         </ul>
         <p class="small"><span class="meta">Starting at:</span> <span class="price">$1,500</span></p>
-        <p class="small"><span class="meta">Best for:</span> teams, studios, shops</p>
       </div>
     </section>
   </div>
 
+  <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="container">
       <div class="form-box">
-        <h2>Request a Fast Audit</h2>
+        <h2>Work With BAG Digital</h2>
 
         <form id="leadForm">
           <input type="text" name="website" tabindex="-1" autocomplete="off"
@@ -307,13 +396,13 @@
             <option value="Automation">Ops Automation (Small System)</option>
           </select>
 
-          <textarea name="message" rows="4" placeholder="What are you trying to automate or fix? (lead capture, follow-up, tracking, scheduling, inventory, etc.)"></textarea>
+          <textarea class="form-text" name="message" rows="4" placeholder="What do you want to automate or fix? (lead capture, follow-up, tracking, scheduling, inventory, etc.)"></textarea>
 
           <button type="submit" class="btn" id="subBtn">Send</button>
         </form>
 
         <div id="status" class="status"></div>
-        <p class="fineprint">I reply with next steps and a simple plan. No retainer required.</p>
+        <p class="fineprint">I reply with a simple plan and next steps. No retainer required.</p>
       </div>
     </div>
   </section>
@@ -337,22 +426,22 @@
       "sq1": "Square-1", "pyram": "Pyraminx", "minx": "Megaminx", "skewb": "Skewb", "clock": "Clock"
     };
 
-    function setEventLabel() {
+    function setEventLabel(){
       eventLabel.textContent = eventNames[eventSelect.value] || eventSelect.value;
     }
 
-    async function updateScramble() {
+    async function updateScramble(){
       const ev = eventSelect.value;
       setEventLabel();
       scrambleText.innerText = "Syncing...";
-      try {
+      try{
         const alg = await randomScrambleForEvent(ev);
         const str = alg.toString();
         scrambleText.innerText = str;
 
         player.puzzle = puzzleMap[ev];
         player.alg = str;
-      } catch (e) {
+      }catch(e){
         scrambleText.innerText = "Error. Please refresh.";
       }
     }
@@ -364,7 +453,7 @@
     updateScramble();
   </script>
 
-  <!-- Timer + session logging (NO auto-scroll, NO auto-scramble on stop) -->
+  <!-- Timer + session logging (table + mobile cards) -->
   <script>
     const timeDisplay = document.getElementById('timeDisplay');
     const startStopBtn = document.getElementById('startStopBtn');
@@ -375,6 +464,7 @@
 
     const sessionTable = document.getElementById('sessionTable');
     const sessionBody = document.getElementById('sessionBody');
+    const solveCards = document.getElementById('solveCards');
     const emptyState = document.getElementById('emptyState');
 
     const copyCsvBtn = document.getElementById('copyCsvBtn');
@@ -391,9 +481,7 @@
     let startTime = 0;
     let interval = null;
 
-    // Stored for lead context if desired (client-side only)
     window.__bagLastSolve = null;
-
     let session = [];
 
     function fmtTime(sec){ return Number(sec).toFixed(2); }
@@ -406,22 +494,18 @@
       }
       const last = session[session.length - 1];
       lastTimeEl.textContent = `${fmtTime(last.timeSec)}s`;
-
       const best = session.reduce((m,x)=>Math.min(m,x.timeSec), Infinity);
       bestTimeEl.textContent = `${fmtTime(best)}s`;
     }
 
-    function renderTable(){
-      if(session.length === 0){
-        emptyState.style.display = "block";
-        sessionTable.style.display = "none";
-        sessionBody.innerHTML = "";
-        return;
-      }
-      emptyState.style.display = "none";
-      sessionTable.style.display = "table";
+    function render(){
+      const has = session.length > 0;
 
-      sessionBody.innerHTML = session.map((row) => {
+      emptyState.style.display = has ? "none" : "block";
+      sessionTable.style.display = has ? "table" : "none";
+
+      // table rows
+      sessionBody.innerHTML = has ? session.map((row) => {
         const when = new Date(row.tsIso).toLocaleString();
         return `
           <tr>
@@ -431,7 +515,32 @@
             <td>${when}</td>
           </tr>
         `;
-      }).join("");
+      }).join("") : "";
+
+      // mobile cards
+      solveCards.innerHTML = has ? session.slice().reverse().map((row) => {
+        const when = new Date(row.tsIso).toLocaleString();
+        return `
+          <div class="solve-card">
+            <div>
+              <div class="label">Solve</div>
+              <div class="value">#${row.n}</div>
+            </div>
+            <div>
+              <div class="label">Event</div>
+              <div class="value">${row.eventName}</div>
+            </div>
+            <div>
+              <div class="label">Time</div>
+              <div class="value mono">${fmtTime(row.timeSec)}s</div>
+            </div>
+            <div>
+              <div class="label">When</div>
+              <div class="value">${when}</div>
+            </div>
+          </div>
+        `;
+      }).join("") : "";
     }
 
     function getCsv(){
@@ -499,12 +608,10 @@
       };
 
       session.push(entry);
-      window.__bagLastSolve = entry; // for form context if you want it later
+      window.__bagLastSolve = entry;
 
       updateBestAndLast();
-      renderTable();
-
-      // IMPORTANT: no auto-scramble here. User chooses "New Scramble".
+      render();
     }
 
     function toggleTimer(){
@@ -523,25 +630,15 @@
       window.__bagLastSolve = null;
 
       updateBestAndLast();
-      renderTable();
+      render();
     }
 
-    // Button controls (mobile-friendly)
-    startStopBtn.addEventListener("click", (e) => {
-      // prevent focus-related scroll quirks on some mobile browsers
-      e.preventDefault();
-      startStopBtn.blur();
-      toggleTimer();
-    });
-    resetSessionBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      resetSessionBtn.blur();
-      clearSession();
-    });
+    startStopBtn.addEventListener("click", (e) => { e.preventDefault(); startStopBtn.blur(); toggleTimer(); });
+    resetSessionBtn.addEventListener("click", (e) => { e.preventDefault(); resetSessionBtn.blur(); clearSession(); });
+
     copyCsvBtn.addEventListener("click", copyCsv);
     downloadCsvBtn.addEventListener("click", downloadCsv);
 
-    // Spacebar control (desktop)
     window.addEventListener("keydown", (e) => {
       if(e.code !== "Space") return;
       if(["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName)) return;
@@ -550,7 +647,71 @@
     });
 
     updateBestAndLast();
-    renderTable();
+    render();
+  </script>
+
+  <!-- Organizer persistence (localStorage) -->
+  <script>
+    const LS_KEY = "bag_competition_organizer_v2";
+
+    const organizerRoot = document.getElementById("organizer");
+    const notesEl = document.getElementById("notes");
+    const copyNotesBtn = document.getElementById("copyNotesBtn");
+    const clearNotesBtn = document.getElementById("clearNotesBtn");
+    const resetOrganizerBtn = document.getElementById("resetOrganizerBtn");
+
+    function loadOrganizer(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(!raw) return;
+        const data = JSON.parse(raw);
+
+        const boxes = organizerRoot.querySelectorAll('input[type="checkbox"][data-k]');
+        boxes.forEach((b) => {
+          const k = b.getAttribute("data-k");
+          if (k in (data.checks || {})) b.checked = !!data.checks[k];
+        });
+
+        if(typeof data.notes === "string") notesEl.value = data.notes;
+      }catch{}
+    }
+
+    function saveOrganizer(){
+      try{
+        const boxes = organizerRoot.querySelectorAll('input[type="checkbox"][data-k]');
+        const checks = {};
+        boxes.forEach((b) => checks[b.getAttribute("data-k")] = b.checked);
+        localStorage.setItem(LS_KEY, JSON.stringify({ checks, notes: notesEl.value || "" }));
+      }catch{}
+    }
+
+    function resetOrganizer(){
+      const boxes = organizerRoot.querySelectorAll('input[type="checkbox"][data-k]');
+      boxes.forEach((b) => b.checked = false);
+      notesEl.value = "";
+      saveOrganizer();
+    }
+
+    organizerRoot.addEventListener("change", (e) => {
+      if(e.target && e.target.matches('input[type="checkbox"][data-k]')) saveOrganizer();
+    });
+    notesEl.addEventListener("input", saveOrganizer);
+
+    copyNotesBtn.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(notesEl.value || "");
+        copyNotesBtn.textContent = "Copied";
+        setTimeout(()=>copyNotesBtn.textContent="Copy Notes", 900);
+      }catch{
+        copyNotesBtn.textContent = "Copy failed";
+        setTimeout(()=>copyNotesBtn.textContent="Copy Notes", 900);
+      }
+    });
+
+    clearNotesBtn.addEventListener("click", () => { notesEl.value = ""; saveOrganizer(); });
+    resetOrganizerBtn.addEventListener("click", resetOrganizer);
+
+    loadOrganizer();
   </script>
 
   <!-- Lead form submit -> Google Apps Script Web App (server unchanged) -->
@@ -576,16 +737,20 @@
         return;
       }
 
-      fd.append("source", "cubing-tools");
+      fd.append("source", "competition-day-page");
       fd.append("pageTitle", document.title);
       fd.append("timestamp", new Date().toISOString());
       fd.append("userAgent", navigator.userAgent);
 
-      // Attach last solve context (optional; script will just store extra columns if you add them later)
       if (window.__bagLastSolve) {
         fd.append("lastSolveEvent", window.__bagLastSolve.eventName);
         fd.append("lastSolveTimeSec", String(window.__bagLastSolve.timeSec));
       }
+
+      try{
+        const organizerRaw = localStorage.getItem("bag_competition_organizer_v2");
+        if (organizerRaw) fd.append("organizerData", organizerRaw);
+      }catch{}
 
       try {
         const res = await fetch(LEAD_ENDPOINT, { method: "POST", body: fd });
@@ -595,7 +760,7 @@
         statusEl.textContent = "Received. I’ll reply soon.";
         form.reset();
       } catch (err) {
-        statusEl.textContent = "Error sending. Please email Jaime@bagdigital.tech.";
+        statusEl.textContent = "Error sending. Please email Jaime@BAGdigital.tech.";
       } finally {
         subBtn.disabled = false;
         subBtn.textContent = "Send";
