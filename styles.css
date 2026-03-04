@@ -1,0 +1,162 @@
+/* Dark, high-contrast theme + subtle glass UI. No inline CSS required. */
+
+:root {
+  --bg: #0b1220;
+  --bg2: #070b13;
+  --card: rgba(255,255,255,0.06);
+  --card2: rgba(255,255,255,0.10);
+  --border: rgba(255,255,255,0.10);
+  --muted: rgba(255,255,255,0.72);
+  --shadow: 0 14px 34px rgba(0,0,0,0.35);
+}
+
+html, body {
+  height: 100%;
+  background: radial-gradient(900px 500px at 30% -10%, rgba(255,255,255,0.10), transparent 60%),
+              radial-gradient(700px 500px at 90% 110%, rgba(255,255,255,0.06), transparent 60%),
+              linear-gradient(180deg, var(--bg), var(--bg2));
+  color: rgba(255,255,255,0.92);
+}
+
+.header-glass {
+  background: rgba(11, 18, 32, 0.76);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.brand-badge {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.hero-section {
+  padding-top: 1rem;
+}
+
+.section {
+  scroll-margin-top: 90px;
+}
+
+.badge-soft {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+}
+
+.dot-live {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.18);
+}
+
+.card-soft {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.card-glass {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--border);
+}
+
+.card-feature {
+  background: var(--card2);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow);
+}
+
+.stack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stack-item {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 0.75rem;
+  padding: 0.9rem;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid var(--border);
+}
+
+.stack-num {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
+  font-weight: 700;
+}
+
+.mini-tile {
+  padding: 0.9rem;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid var(--border);
+  height: 100%;
+}
+
+.price {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+.form-control, .form-select {
+  background-color: rgba(0,0,0,0.20) !important;
+  border: 1px solid var(--border) !important;
+  color: rgba(255,255,255,0.92) !important;
+}
+
+.form-control::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: rgba(255,255,255,0.22) !important;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 10px;
+  z-index: 9999;
+  background: #fff;
+  color: #000;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 10px;
+}
+
+a, .btn {
+  transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease, opacity 120ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
