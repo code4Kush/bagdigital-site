@@ -2,761 +2,777 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>BAGDigital.tech — Competition Day Tools</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="robots" content="index,follow" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <title>BAG Digital | Websites & Automations in Beaufort, SC</title>
+  <meta name="description" content="Jaime Torres (BAG Digital) builds fast small business websites and Google Workspace automations in Beaufort, SC and the Lowcountry. Lead capture, follow-up flows, and ops dashboards." />
+  <link rel="canonical" href="https://bagdigital.tech/" />
 
-  <script type="module" src="https://cdn.cubing.net/v0/js/cubing/twisty"></script>
-  <script type="module">import 'https://unpkg.com/@material/web/all.js?module';</script>
+  <!-- Content Security Policy (static-site friendly, no inline JS/CSS) -->
+  <!-- If you add new third-party embeds (Calendly, analytics, etc.), you must update this CSP allowlist. -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    frame-ancestors 'none';
+    form-action 'self' mailto:;
+    script-src 'self' https://cdn.jsdelivr.net;
+    style-src 'self' https://cdn.jsdelivr.net;
+    img-src 'self' data: https:;
+    font-src 'self' data:;
+    connect-src 'self' https://script.google.com https://script.googleusercontent.com;
+    upgrade-insecure-requests;
+    block-all-mixed-content;
+  " />
 
-  <style>
-    :root{
-      --b:#0047FF; --bg:#FFFFFF; --ink:#000000; --muted:#333333;
-      --panel:#F4F7FF; --r24:24px;
-      font-family:'Roboto',sans-serif;
-    }
-    *{box-sizing:border-box;}
-    html,body{height:100%; margin:0;}
-    body{background:var(--bg);color:var(--ink);line-height:1.55;}
-    a,button,select{touch-action:manipulation;}
+  <!-- Permissions Policy (reduce attack surface) -->
+  <meta http-equiv="Permissions-Policy" content="
+    geolocation=(),
+    camera=(),
+    microphone=(),
+    payment=(),
+    usb=(),
+    interest-cohort=()
+  " />
 
-    /* App layout: full height, no sideways scroll */
-    .app{
-      min-height:100svh; /* stable viewport on mobile */
-      display:flex;
-      flex-direction:column;
-    }
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="BAG Digital | Websites & Automations (Beaufort, SC)" />
+  <meta property="og:description" content="Fast websites + practical automation for small businesses and nonprofits in Beaufort and the Lowcountry." />
+  <meta property="og:url" content="https://bagdigital.tech/" />
 
-    header{
-      padding:10px 14px;border-bottom:1px solid #EEE;background:#fff;
-      position:sticky;top:0;z-index:10;
-    }
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
-    .brand{font-size:1.25rem;font-weight:900;letter-spacing:-1px;white-space:nowrap;}
-    .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  <!-- Bootstrap CSS (CDN + SRI) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+    crossorigin="anonymous"
+  />
 
-    /* Main content: keep everything readable, timer screen uses the full viewport */
-    main{flex:1; display:flex; flex-direction:column; gap:12px; padding:12px 14px;}
+  <!-- Your CSS (no inline styles needed) -->
+  <link rel="stylesheet" href="/styles.css" />
 
-    /* TIMER SCREEN (tap anywhere) */
-    .timer-screen{
-      background:var(--panel);
-      border:3px solid #E0E4FF;
-      border-radius:22px;
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      padding:14px;
-      position:relative;
-      user-select:none;
-      -webkit-user-select:none;
-      touch-action:manipulation; /* prevents double-tap zoom */
-      outline:none;
+  <!-- Local SEO schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"ProfessionalService",
+    "name":"BAG Digital",
+    "url":"https://bagdigital.tech/",
+    "founder":"Jaime Torres",
+    "serviceType":[
+      "Small business websites",
+      "Website maintenance & care plans",
+      "Google Workspace automation",
+      "Google Apps Script development",
+      "Lead intake & follow-up systems",
+      "Operations dashboards"
+    ],
+    "areaServed":[
+      "Beaufort, SC",
+      "Port Royal, SC",
+      "Lady's Island, SC",
+      "St. Helena Island, SC",
+      "Bluffton, SC",
+      "Hilton Head Island, SC",
+      "Charleston, SC",
+      "Savannah, GA",
+      "Remote"
+    ],
+    "address":{
+      "@type":"PostalAddress",
+      "addressLocality":"Beaufort",
+      "addressRegion":"SC",
+      "addressCountry":"US"
     }
-    .timer-top{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .controls{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      width:100%;
-    }
-    select#eventSelect{
-      flex:1;
-      min-width:160px;
-      height:48px;
-      border-radius:12px;
-      border:3px solid var(--ink);
-      background:#FFF;
-      font-size:1rem;
-      font-weight:900;
-      padding:0 12px;
-      cursor:pointer;
-    }
+  }
+  </script>
 
-    .scramble{
-      width:100%;
-      background:#000;color:#00FF41;
-      padding:12px;
-      border-radius:12px;
-      font-family:'Courier New',monospace;
-      font-size:1rem;
-      min-height:52px;
-      border:2px solid #333;
-      text-align:center;
-      word-wrap:break-word;
-    }
-
-    .timer-mid{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      padding:10px 0;
-      gap:10px;
-    }
-    .time{
-      font-weight:900;
-      letter-spacing:-1px;
-      font-variant-numeric:tabular-nums;
-      /* Big, screen-filling time without overflow */
-      font-size: clamp(4.0rem, 18vw, 9rem);
-      line-height:1;
-    }
-    .meta{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-      font-weight:900;
-      color:var(--muted);
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid #DDD;
-      background:#fff;
-      color:#000;
-      font-weight:900;
-      white-space:nowrap;
-    }
-    .pill strong{color:var(--b);}
-
-    .tap-hint{
-      text-align:center;
-      font-weight:800;
-      color:var(--muted);
-      margin-top:6px;
-    }
-
-    .timer-bottom{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-      align-items:center;
-    }
-
-    /* Optional secondary panel (collapsed by default on small screens) */
-    details.panel{
-      background:#fff;
-      border:1px solid #EEE;
-      border-radius:18px;
-      overflow:hidden;
-    }
-    details.panel > summary{
-      padding:12px 14px;
-      cursor:pointer;
-      font-weight:900;
-      list-style:none;
-    }
-    details.panel > summary::-webkit-details-marker{display:none;}
-    .panel-inner{padding:0 14px 14px;}
-
-    /* Session log: cards only (no resize, no horizontal scroll) */
-    .solve-cards{
-      display:grid;
-      gap:10px;
-      padding-top:10px;
-    }
-    .solve-card{
-      border:1px solid #EEE;border-radius:14px;padding:12px;background:#fff;
-      display:grid;grid-template-columns:1fr 1fr;gap:8px;
-    }
-    .label{color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:0.6px;font-size:0.8rem;}
-    .value{font-weight:900;}
-    .mono{font-family:'Courier New',monospace;}
-
-    /* Organizer */
-    .organizer{display:grid; gap:10px;}
-    .org-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;}
-    .org-card{border:1px solid #EEE;border-radius:16px;padding:12px;background:#fff;}
-    .org-card h3{margin:0 0 8px;font-size:1.05rem;}
-    .checklist{margin:0;padding-left:18px;}
-    .checklist li{margin:8px 0;font-weight:800;}
-    textarea{resize:none !important;}
-    .note{
-      width:100%;
-      height:140px;
-      overflow:auto;
-      padding:12px;border-radius:12px;border:2px solid #DDD;
-      font-weight:800;font-size:1rem;
-    }
-    .mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
-
-    /* Contact */
-    .contact{
-      background:#000;color:#FFF;padding:24px 14px;
-      border-radius:22px;
-    }
-    .contact h2{margin:0 0 12px;text-align:center;font-size:1.6rem;letter-spacing:-1px;}
-    input, select.form-input, textarea.form-text{
-      width:100%;padding:14px;margin-bottom:12px;border-radius:10px;
-      border:2px solid #444;background:#111;color:#FFF;font-size:1rem;
-    }
-    textarea.form-text{height:120px; overflow:auto;}
-    .btn{width:100%;padding:16px;background:var(--b);color:#FFF;border:none;border-radius:10px;font-weight:900;cursor:pointer;}
-    .btn:disabled{opacity:0.65;cursor:not-allowed;}
-    .status{margin-top:10px;text-align:center;font-weight:900;}
-    .fineprint{margin:10px 0 0;text-align:center;color:#BDBDBD;font-weight:700;font-size:0.95rem;}
-
-    /* Prevent accidental zooming on form fields on iOS by keeping font-size >= 16px */
-    input, select, textarea{font-size:16px;}
-
-    /* Make timer screen really fill the display on very small devices */
-    @media (max-height:720px){
-      main{padding:10px;}
-      .time{font-size: clamp(3.6rem, 18vw, 8.5rem);}
-    }
-  </style>
+  <!-- FAQ schema (conservative; no inflated claims) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Do you work on existing WordPress sites?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Yes. If you already have WordPress (or another platform), I can improve content, layout, and reliability. When a static site is a better fit, I can build a low-maintenance alternative."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"Do you offer monthly support?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Yes. Care Plans are scoped with included hours and response times, so support stays predictable."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"What’s a typical automation?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Lead intake that routes form submissions into a tracking pipeline with instant notifications, confirmations, and follow-up reminders using Google Workspace + Apps Script."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
-  <div class="app">
-    <header>
-      <div class="topbar">
-        <strong class="brand">BAGDigital<span style="color:var(--b);">.tech</span></strong>
-        <div class="top-actions">
-          <md-outlined-button onclick="document.getElementById('panel').scrollIntoView({behavior:'smooth'})">
-            Organizer / Log
-          </md-outlined-button>
-          <md-filled-button onclick="document.getElementById('timer').scrollIntoView({behavior:'smooth'})">
-            Timer
-          </md-filled-button>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Header / Nav -->
+  <header class="sticky-top border-bottom border-light border-opacity-10 header-glass">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container py-2">
+        <a class="navbar-brand d-flex align-items-center gap-3" href="#top">
+          <span class="brand-badge" aria-hidden="true">BAG</span>
+          <span class="d-flex flex-column lh-sm">
+            <span class="fw-semibold">BAG Digital</span>
+            <span class="text-secondary small">Jaime Torres • Beaufort, SC</span>
+          </span>
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#navOffcanvas"
+          aria-controls="navOffcanvas"
+          aria-label="Open navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+            <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
+            <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+            <li class="nav-item ms-lg-2">
+              <a class="btn btn-outline-light btn-sm px-3" href="#contact">Request a quote</a>
+            </li>
+            <li class="nav-item ms-lg-2">
+              <a class="btn btn-light btn-sm px-3 text-dark" href="/tools/">Tools / Lab</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </header>
+    </nav>
 
-    <main>
-      <!-- FULL-SCREEN TIMER AREA -->
-      <section id="timer" class="timer-screen" tabindex="0" aria-label="Tap anywhere timer screen">
-        <div class="timer-top">
-          <div class="controls">
-            <select id="eventSelect" aria-label="Select event">
-              <option value="222">2x2x2</option>
-              <option value="333" selected>3x3x3</option>
-              <option value="444">4x4x4</option>
-              <option value="555">5x5x5</option>
-              <option value="666">6x6x6</option>
-              <option value="777">7x7x7</option>
-              <option value="sq1">Square-1</option>
-              <option value="pyram">Pyraminx</option>
-              <option value="minx">Megaminx</option>
-              <option value="skewb">Skewb</option>
-              <option value="clock">Clock</option>
-            </select>
-
-            <md-outlined-button id="newScrambleBtn">Next Scramble</md-outlined-button>
-            <md-outlined-button id="clearSessionBtn">Clear Session</md-outlined-button>
-          </div>
-
-          <div class="scramble" id="scrambleText">Connecting...</div>
+    <!-- Mobile offcanvas -->
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="navOffcanvas" aria-labelledby="navOffcanvasLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="navOffcanvasLabel">BAG Digital</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close navigation"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="list-group list-group-flush">
+          <a class="list-group-item list-group-item-action bg-transparent text-light" href="#services" data-close-nav>Services</a>
+          <a class="list-group-item list-group-item-action bg-transparent text-light" href="#pricing" data-close-nav>Pricing</a>
+          <a class="list-group-item list-group-item-action bg-transparent text-light" href="#work" data-close-nav>Work</a>
+          <a class="list-group-item list-group-item-action bg-transparent text-light" href="#faq" data-close-nav>FAQ</a>
+          <a class="list-group-item list-group-item-action bg-transparent text-light" href="#contact" data-close-nav>Request a quote</a>
+          <a class="list-group-item list-group-item-action bg-transparent text-light" href="/tools/">Tools / Lab</a>
         </div>
+      </div>
+    </div>
+  </header>
 
-        <div class="timer-mid">
-          <div class="time" id="timeDisplay">0.00</div>
-
-          <div class="meta">
-            <span class="pill">Event: <strong id="eventLabel">3x3x3</strong></span>
-            <span class="pill">Last: <strong id="lastTime">—</strong></span>
-            <span class="pill">Best: <strong id="bestTime">—</strong></span>
-          </div>
-
-          <div class="tap-hint">
-            Tap anywhere on this screen to <strong>Start / Stop</strong>.
-            (Space also works on desktop.)
-          </div>
-        </div>
-
-        <div class="timer-bottom">
-          <md-filled-button id="startStopBtn">Start</md-filled-button>
-          <md-outlined-button id="toggleVizBtn">Show / Hide Visualizer</md-outlined-button>
-        </div>
-
-        <!-- Optional visualizer overlay (does not resize layout) -->
-        <div id="vizWrap" style="display:none; margin-top:10px;">
-          <div style="background:#fff;border:1px solid #CCC;border-radius:15px;padding:10px;height:220px;display:flex;align-items:center;justify-content:center;">
-            <twisty-player id="player" background="none" control-panel="none" visualization="2D" style="width:100%;height:200px;"></twisty-player>
-          </div>
-        </div>
-      </section>
-
-      <!-- COLLAPSIBLE PANEL FOR ORGANIZER + LOG + CONTACT -->
-      <details id="panel" class="panel">
-        <summary>Organizer + Session Log + Contact</summary>
-        <div class="panel-inner">
-
-          <div class="organizer" aria-label="Competition day organizer">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
-              <div>
-                <div style="font-weight:900; font-size:1.2rem;">Competition Day Organizer</div>
-                <div style="color:var(--muted); font-weight:800;">Checklist + notes save on your phone. No resizing.</div>
-              </div>
-              <md-filled-button id="resetOrganizerBtn">Reset Organizer</md-filled-button>
+  <main id="main">
+    <!-- Hero -->
+    <section id="top" class="hero-section">
+      <div class="container py-5 py-lg-6">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <div class="d-inline-flex align-items-center gap-2 badge-soft px-3 py-2 rounded-pill">
+              <span class="dot-live" aria-hidden="true"></span>
+              <span class="small text-secondary">Websites + automations for the Lowcountry • Now booking</span>
             </div>
 
-            <div class="org-grid">
-              <div class="org-card">
-                <h3>5-Minute Ready Check</h3>
-                <ul class="checklist">
-                  <li><label><input type="checkbox" data-k="badge"> Badge / wristband / check-in done</label></li>
-                  <li><label><input type="checkbox" data-k="cube"> Correct cube(s) for next event</label></li>
-                  <li><label><input type="checkbox" data-k="tools"> Lube / screwdriver / cloth</label></li>
-                  <li><label><input type="checkbox" data-k="water"> Water + snack</label></li>
-                  <li><label><input type="checkbox" data-k="warmup"> Warm-up: 3–5 solves, then stop</label></li>
-                </ul>
-              </div>
+            <h1 class="display-5 fw-bold mt-4">
+              Web developer in <span class="text-muted">Beaufort, SC</span> for small business websites + automation
+            </h1>
 
-              <div class="org-card">
-                <h3>Parent Ops Checklist</h3>
-                <ul class="checklist">
-                  <li><label><input type="checkbox" data-k="schedule"> Next event + group time known</label></li>
-                  <li><label><input type="checkbox" data-k="quiet"> Quiet zone plan (lower stress)</label></li>
-                  <li><label><input type="checkbox" data-k="food"> Food/hydration between rounds</label></li>
-                  <li><label><input type="checkbox" data-k="ride"> End-time + ride plan confirmed</label></li>
-                  <li><label><input type="checkbox" data-k="pics"> Photos after solves, not before</label></li>
-                </ul>
-              </div>
+            <p class="lead text-secondary mt-3">
+              I build fast websites that generate calls and quote requests—and I automate the follow-up so leads don’t slip through.
+              Most workflows use Google Workspace (Forms, Sheets, Drive) and Apps Script.
+            </p>
 
-              <div class="org-card">
-                <h3>My Notes (rounds / goals / reminders)</h3>
-                <textarea class="note" id="notes" placeholder="Example: 3x3 R1 — steady solves. Slow inspection. Breathe."></textarea>
-                <div class="mini-actions">
-                  <md-outlined-button id="copyNotesBtn">Copy Notes</md-outlined-button>
-                  <md-outlined-button id="clearNotesBtn">Clear Notes</md-outlined-button>
+            <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+              <a class="btn btn-light btn-lg text-dark" href="#contact">Request a quote</a>
+              <a class="btn btn-outline-light btn-lg" href="#pricing">Pricing + Care Plans</a>
+            </div>
+
+            <div class="row g-3 mt-4">
+              <div class="col-sm-4">
+                <div class="card card-soft h-100">
+                  <div class="card-body">
+                    <div class="small text-secondary">Best for</div>
+                    <div class="fw-semibold mt-1">Roofing, trades, local services</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card card-soft h-100">
+                  <div class="card-body">
+                    <div class="small text-secondary">Also</div>
+                    <div class="fw-semibold mt-1">Nonprofits + outreach orgs</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="card card-soft h-100">
+                  <div class="card-body">
+                    <div class="small text-secondary">Support</div>
+                    <div class="fw-semibold mt-1">Scoped monthly plans</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="card card-glass shadow-soft">
+              <div class="card-body p-4 p-lg-5">
+                <h2 class="h6 fw-semibold mb-2">Typical deliverable: Lead Intake System</h2>
+                <p class="text-secondary small mb-4">
+                  A clean site plus a reliable workflow—instant notifications, confirmation to the lead, and a simple pipeline for tracking.
+                </p>
+
+                <div class="stack">
+                  <div class="stack-item">
+                    <div class="stack-num" aria-hidden="true">1</div>
+                    <div>
+                      <div class="fw-semibold">Website that converts</div>
+                      <div class="text-secondary small">Fast pages, clear CTAs, call + form optimized.</div>
+                    </div>
+                  </div>
+                  <div class="stack-item">
+                    <div class="stack-num" aria-hidden="true">2</div>
+                    <div>
+                      <div class="fw-semibold">Lead routing</div>
+                      <div class="text-secondary small">Form → tracking sheet → notification to owner.</div>
+                    </div>
+                  </div>
+                  <div class="stack-item">
+                    <div class="stack-num" aria-hidden="true">3</div>
+                    <div>
+                      <div class="fw-semibold">Follow-up support</div>
+                      <div class="text-secondary small">Care Plans for updates, fixes, and improvements.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                  <span class="badge rounded-pill text-bg-dark border border-light border-opacity-10">Beaufort / Lowcountry</span>
+                  <span class="badge rounded-pill text-bg-dark border border-light border-opacity-10">Google Workspace</span>
+                  <span class="badge rounded-pill text-bg-dark border border-light border-opacity-10">Apps Script</span>
+                  <span class="badge rounded-pill text-bg-dark border border-light border-opacity-10">WordPress (when needed)</span>
+                  <span class="badge rounded-pill text-bg-dark border border-light border-opacity-10">Static builds</span>
+                </div>
+
+                <a class="btn btn-outline-light w-100 mt-4" href="#contact">Tell me what you need →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section border-top border-light border-opacity-10">
+      <div class="container py-5">
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <h2 class="h3 fw-bold">Services</h2>
+            <p class="text-secondary mt-3">
+              Practical builds with clear scope: launch fast, keep it reliable, improve over time.
+            </p>
+            <p class="text-secondary small mt-3">
+              Local focus keywords (natural use): Beaufort SC web developer, small business website, lead intake automation, Google Workspace automation, Apps Script.
+            </p>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="card card-soft h-100">
+                  <div class="card-body p-4">
+                    <h3 class="h5 fw-semibold">Website Launch</h3>
+                    <p class="text-secondary small mt-2">
+                      Fast, mobile-first pages for local businesses. Built for calls, quotes, and contact.
+                    </p>
+                    <ul class="text-secondary small mt-3 mb-0">
+                      <li>1–5 pages (Home, Services, About, Service Area, Contact)</li>
+                      <li>Reliable contact flow (no lead loss)</li>
+                      <li>Local SEO fundamentals (structure + metadata)</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
 
-              <div class="org-card">
-                <h3>Between-Rounds Plan</h3>
-                <ul class="checklist">
-                  <li><strong>Right after:</strong> hydrate + reset mentally</li>
-                  <li><strong>10–20 min:</strong> light snack, calm hands</li>
-                  <li><strong>Last 10 min:</strong> no new algs, no panic</li>
-                  <li><strong>Call time:</strong> cube legal, timer ok</li>
+              <div class="col-md-6">
+                <div class="card card-soft h-100">
+                  <div class="card-body p-4">
+                    <h3 class="h5 fw-semibold">Lead Intake Automation</h3>
+                    <p class="text-secondary small mt-2">
+                      Turn inquiries into a pipeline with notifications, confirmations, and follow-up reminders.
+                    </p>
+                    <ul class="text-secondary small mt-3 mb-0">
+                      <li>Form → tracking sheet/CRM → notify owner (email/SMS)</li>
+                      <li>Auto-confirmation to the lead</li>
+                      <li>Reminders when no response is logged</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card card-soft h-100">
+                  <div class="card-body p-4">
+                    <h3 class="h5 fw-semibold">Ops Automation</h3>
+                    <p class="text-secondary small mt-2">
+                      Reduce admin work with repeatable workflows using Google Workspace + Apps Script.
+                    </p>
+                    <ul class="text-secondary small mt-3 mb-0">
+                      <li>Intake + scheduling handoffs</li>
+                      <li>Dashboards + weekly summaries</li>
+                      <li>File organization + templated docs</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card card-soft h-100">
+                  <div class="card-body p-4">
+                    <h3 class="h5 fw-semibold">WordPress Updates</h3>
+                    <p class="text-secondary small mt-2">
+                      If you already have WordPress, I can improve content, layout, and reliability (safe, scoped updates).
+                    </p>
+                    <ul class="text-secondary small mt-3 mb-0">
+                      <li>Content updates + layout improvements</li>
+                      <li>Mobile readability fixes</li>
+                      <li>Basic housekeeping (scoped)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card-soft mt-3">
+              <div class="card-body p-4">
+                <h3 class="h5 fw-semibold mb-3">How projects run</h3>
+                <div class="row g-3">
+                  <div class="col-md-3">
+                    <div class="mini-tile">
+                      <div class="fw-semibold">1) Define</div>
+                      <div class="text-secondary small">Intake + scope + acceptance checks.</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mini-tile">
+                      <div class="fw-semibold">2) Build</div>
+                      <div class="text-secondary small">Milestones you can review quickly.</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mini-tile">
+                      <div class="fw-semibold">3) Launch</div>
+                      <div class="text-secondary small">Mobile + forms verified; optional analytics.</div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mini-tile">
+                      <div class="fw-semibold">4) Support</div>
+                      <div class="text-secondary small">Care Plans for updates + improvements.</div>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-secondary small mt-3 mb-0">
+                  SEO note: I implement strong fundamentals (structure, performance, metadata). Rankings depend on competition, content, and market factors.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section border-top border-light border-opacity-10">
+      <div class="container py-5">
+        <div class="d-flex flex-column flex-lg-row align-items-lg-end justify-content-lg-between gap-3">
+          <div>
+            <h2 class="h3 fw-bold">Pricing</h2>
+            <p class="text-secondary mt-2 mb-0">
+              Clear starting points. Exact pricing depends on scope. Monthly support is scoped with included hours + response times.
+            </p>
+          </div>
+          <a class="btn btn-light text-dark" href="#contact">Get an estimate</a>
+        </div>
+
+        <div class="row g-3 mt-3">
+          <div class="col-md-4">
+            <div class="card card-soft h-100">
+              <div class="card-body p-4">
+                <h3 class="h5 fw-semibold">Basic Website + Contact</h3>
+                <p class="text-secondary small mt-2">A clean, fast site with a reliable contact flow.</p>
+                <div class="price mt-3">from $600</div>
+                <ul class="text-secondary small mt-3 mb-0">
+                  <li>1–3 pages</li>
+                  <li>Mobile-first</li>
+                  <li>Contact form routed correctly</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <div style="height:14px;"></div>
-
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-            <div style="font-weight:900; font-size:1.2rem;">Session Log (tap timer to add solves)</div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <md-outlined-button id="copyCsvBtn">Copy CSV</md-outlined-button>
-              <md-outlined-button id="downloadCsvBtn">Download CSV</md-outlined-button>
+          <div class="col-md-4">
+            <div class="card card-soft h-100">
+              <div class="card-body p-4">
+                <h3 class="h5 fw-semibold">Lead Intake Automation</h3>
+                <p class="text-secondary small mt-2">Form → notifications → pipeline tracking.</p>
+                <div class="price mt-3">from $750</div>
+                <ul class="text-secondary small mt-3 mb-0">
+                  <li>Tracking pipeline (Sheet/CRM)</li>
+                  <li>Confirmation to lead</li>
+                  <li>Follow-up reminders</li>
+                </ul>
+              </div>
             </div>
           </div>
 
-          <div id="emptyState" style="margin-top:10px; color:var(--muted); font-weight:900;">No solves yet.</div>
-          <div id="solveCards" class="solve-cards" aria-label="Session cards"></div>
+          <div class="col-md-4">
+            <div class="card card-soft h-100">
+              <div class="card-body p-4">
+                <h3 class="h5 fw-semibold">Ops Automation</h3>
+                <p class="text-secondary small mt-2">Workflows + dashboards to reduce admin work.</p>
+                <div class="price mt-3">from $1,500</div>
+                <ul class="text-secondary small mt-3 mb-0">
+                  <li>Apps Script workflows</li>
+                  <li>Dashboards + summaries</li>
+                  <li>Doc/file templating</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <div style="height:18px;"></div>
+        <h3 class="h4 fw-bold mt-5">Monthly Care Plans</h3>
+        <p class="text-secondary mt-2">
+          Predictable support: defined scope + included hours (no “unlimited retainer” ambiguity).
+        </p>
 
-          <div class="contact" id="contact">
-            <h2>Work With BAG Digital</h2>
+        <div class="row g-3 mt-2">
+          <div class="col-md-4">
+            <div class="card card-soft h-100">
+              <div class="card-body p-4">
+                <h4 class="h5 fw-semibold">Starter Care</h4>
+                <p class="text-secondary small mt-2">Keep the site stable and updated.</p>
+                <div class="price mt-3">$149–$249<span class="fs-6 text-secondary">/mo</span></div>
+                <ul class="text-secondary small mt-3 mb-0">
+                  <li>Monitoring + basic housekeeping</li>
+                  <li>30–60 minutes small edits</li>
+                  <li>Response within 1 business day</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-            <form id="leadForm">
-              <input type="text" name="website" tabindex="-1" autocomplete="off"
-                     style="position:absolute; left:-9999px; height:1px; width:1px; opacity:0;" />
+          <div class="col-md-4">
+            <div class="card card-feature h-100 shadow-soft">
+              <div class="card-body p-4">
+                <div class="badge-soft px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2">
+                  <span class="dot-live" aria-hidden="true"></span>
+                  <span class="small text-secondary">Most popular</span>
+                </div>
+                <h4 class="h5 fw-semibold mt-3">Care + Improvements</h4>
+                <p class="text-secondary small mt-2">Maintenance + steady progress each month.</p>
+                <div class="price mt-3">$349–$699<span class="fs-6 text-secondary">/mo</span></div>
+                <ul class="text-secondary small mt-3 mb-0">
+                  <li>Monitoring + backups (where applicable)</li>
+                  <li>2 hours improvements/month</li>
+                  <li>Response within 1 business day</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-              <input type="text" name="name" placeholder="Name / Business" required>
-              <input type="email" name="email" placeholder="Email Address" required>
+          <div class="col-md-4">
+            <div class="card card-soft h-100">
+              <div class="card-body p-4">
+                <h4 class="h5 fw-semibold">Automation Support</h4>
+                <p class="text-secondary small mt-2">Reliability for lead + ops workflows.</p>
+                <div class="price mt-3">$899–$1,599<span class="fs-6 text-secondary">/mo</span></div>
+                <ul class="text-secondary small mt-3 mb-0">
+                  <li>Workflow monitoring + fixes</li>
+                  <li>2–4 hours improvements/month</li>
+                  <li>Priority response for intake issues</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
 
-              <select name="service" class="form-input" aria-label="Select service">
-                <option value="Lead Intake">Lead Intake Automation (from $750)</option>
-                <option value="Website">Basic Website + Contact (from $600)</option>
-                <option value="Automation">Ops Automation (from $1,500)</option>
-              </select>
+        <p class="text-secondary small mt-3 mb-0">
+          Third-party costs (domains, hosting, email/SMS tools) billed separately. Plans are scoped; larger work is quoted.
+        </p>
+      </div>
+    </section>
 
-              <textarea class="form-text" name="message" rows="4" placeholder="What do you want to automate or fix? (lead capture, follow-up, tracking, scheduling, inventory, etc.)"></textarea>
+    <!-- Work -->
+    <section id="work" class="section border-top border-light border-opacity-10">
+      <div class="container py-5">
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <h2 class="h3 fw-bold">Work</h2>
+            <p class="text-secondary mt-3">
+              Early projects are listed conservatively (scope-only). More detailed case studies will be added as results accumulate.
+            </p>
+          </div>
+          <div class="col-lg-8">
+            <div class="card card-soft">
+              <div class="card-body p-4">
+                <h3 class="h5 fw-semibold">Lowcountry Outreach Center</h3>
+                <p class="text-secondary small mt-2">
+                  WordPress content + layout updates on an existing site (maintenance-focused engagement).
+                </p>
+                <ul class="text-secondary small mt-3 mb-0">
+                  <li>Updated page content and section layouts for clarity and consistency</li>
+                  <li>Responsive adjustments for improved mobile readability</li>
+                  <li>Basic housekeeping (safe, scoped updates)</li>
+                </ul>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                  <span class="badge rounded-pill text-bg-dark border border-light border-opacity-10">WordPress</span>
+                  <span class="badge rounded-pill text-bg-dark border border-light border-opacity-10">Content + layout</span>
+                  <span class="badge rounded-pill text-bg-dark border border-light border-opacity-10">Responsive polish</span>
+                </div>
+              </div>
+            </div>
 
-              <button type="submit" class="btn" id="subBtn">Send</button>
-            </form>
+            <div class="card card-soft mt-3">
+              <div class="card-body p-4">
+                <h3 class="h5 fw-semibold">Currently booking</h3>
+                <p class="text-secondary small mt-2 mb-0">
+                  If you’re a local service business (roofing, trades, home services), I can build a site + lead intake system that’s reliable and easy to operate.
+                </p>
+                <a class="btn btn-outline-light mt-3" href="#contact">Tell me about your project →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <div id="status" class="status"></div>
-            <div class="fineprint">I reply with a simple plan. No retainer required.</div>
+    <!-- FAQ -->
+    <section id="faq" class="section border-top border-light border-opacity-10">
+      <div class="container py-5">
+        <h2 class="h3 fw-bold">FAQ</h2>
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <div class="accordion" id="faqAcc">
+              <div class="accordion-item text-bg-dark border border-light border-opacity-10">
+                <h3 class="accordion-header" id="q1">
+                  <button class="accordion-button collapsed text-bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="false" aria-controls="a1">
+                    How fast can you launch?
+                  </button>
+                </h3>
+                <div id="a1" class="accordion-collapse collapse" aria-labelledby="q1" data-bs-parent="#faqAcc">
+                  <div class="accordion-body text-secondary">
+                    A basic site can often launch quickly once scope and content are finalized. Automation projects depend on integrations and testing needs.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item text-bg-dark border border-light border-opacity-10">
+                <h3 class="accordion-header" id="q2">
+                  <button class="accordion-button collapsed text-bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
+                    Do you support WordPress and non-WordPress?
+                  </button>
+                </h3>
+                <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqAcc">
+                  <div class="accordion-body text-secondary">
+                    Yes. I can work in existing WordPress installs, and I also build fast static sites when a CMS isn’t necessary.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item text-bg-dark border border-light border-opacity-10">
+                <h3 class="accordion-header" id="q3">
+                  <button class="accordion-button collapsed text-bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
+                    What do monthly plans include?
+                  </button>
+                </h3>
+                <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#faqAcc">
+                  <div class="accordion-body text-secondary">
+                    Each plan includes defined tasks plus a monthly hour budget for improvements. Support stays predictable and avoids “unlimited retainer” ambiguity.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item text-bg-dark border border-light border-opacity-10">
+                <h3 class="accordion-header" id="q4">
+                  <button class="accordion-button collapsed text-bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#a4" aria-expanded="false" aria-controls="a4">
+                    What do you need from me to start?
+                  </button>
+                </h3>
+                <div id="a4" class="accordion-collapse collapse" aria-labelledby="q4" data-bs-parent="#faqAcc">
+                  <div class="accordion-body text-secondary">
+                    Your services, service area, preferred contact method, and any current tools (Google Workspace, CRM, scheduling). Photos/logos help, but aren’t required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card card-soft h-100">
+              <div class="card-body p-4">
+                <h3 class="h5 fw-semibold">Service area</h3>
+                <p class="text-secondary small mt-2">
+                  Beaufort, Port Royal, Lady’s Island, St. Helena Island, Bluffton, Hilton Head Island, Charleston — and remote when the scope fits.
+                </p>
+                <p class="text-secondary small mb-0">
+                  If you’re a service business competing locally, I’ll focus your site on: clear service pages, strong calls-to-action, and reliable lead capture.
+                </p>
+              </div>
+            </div>
           </div>
 
         </div>
-      </details>
-    </main>
-  </div>
+      </div>
+    </section>
 
-  <!-- Scrambler -->
-  <script type="module">
-    import { randomScrambleForEvent } from "https://cdn.cubing.net/v0/js/cubing/scramble";
+    <!-- Contact -->
+    <section id="contact" class="section border-top border-light border-opacity-10">
+      <div class="container py-5">
+        <div class="row g-4 align-items-start">
+          <div class="col-lg-5">
+            <h2 class="h3 fw-bold">Request a quote</h2>
+            <p class="text-secondary mt-3">
+              Tell me what you’re trying to accomplish. I’ll reply with a simple plan and next steps.
+            </p>
 
-    const scrambleText = document.getElementById('scrambleText');
-    const eventSelect = document.getElementById('eventSelect');
-    const eventLabel = document.getElementById('eventLabel');
-    const vizWrap = document.getElementById('vizWrap');
-    const player = document.getElementById('player');
-
-    const puzzleMap = {
-      "333": "3x3x3", "222": "2x2x2", "444": "4x4x4", "555": "5x5x5", "666": "6x6x6", "777": "7x7x7",
-      "sq1": "square1", "pyram": "pyraminx", "minx": "megaminx", "skewb": "skewb", "clock": "clock"
-    };
-
-    const eventNames = {
-      "222": "2x2x2", "333": "3x3x3", "444": "4x4x4", "555": "5x5x5", "666": "6x6x6", "777": "7x7x7",
-      "sq1": "Square-1", "pyram": "Pyraminx", "minx": "Megaminx", "skewb": "Skewb", "clock": "Clock"
-    };
-
-    function setEventLabel(){
-      eventLabel.textContent = eventNames[eventSelect.value] || eventSelect.value;
-    }
-
-    async function updateScramble(){
-      const ev = eventSelect.value;
-      setEventLabel();
-      scrambleText.innerText = "Syncing...";
-      try{
-        const alg = await randomScrambleForEvent(ev);
-        const str = alg.toString();
-        scrambleText.innerText = str;
-
-        if (player) {
-          player.puzzle = puzzleMap[ev];
-          player.alg = str;
-        }
-      }catch(e){
-        scrambleText.innerText = "Error. Please refresh.";
-      }
-    }
-
-    document.getElementById('newScrambleBtn').onclick = updateScramble;
-    eventSelect.onchange = updateScramble;
-
-    document.getElementById('toggleVizBtn').onclick = () => {
-      vizWrap.style.display = (vizWrap.style.display === "none") ? "block" : "none";
-    };
-
-    updateScramble();
-  </script>
-
-  <!-- Timer: tap anywhere on timer screen toggles start/stop -->
-  <script>
-    const timerScreen = document.getElementById('timer');
-    const timeDisplay = document.getElementById('timeDisplay');
-    const startStopBtn = document.getElementById('startStopBtn');
-    const clearSessionBtn = document.getElementById('clearSessionBtn');
-
-    const lastTimeEl = document.getElementById('lastTime');
-    const bestTimeEl = document.getElementById('bestTime');
-
-    const solveCards = document.getElementById('solveCards');
-    const emptyState = document.getElementById('emptyState');
-    const copyCsvBtn = document.getElementById('copyCsvBtn');
-    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
-
-    const eventSelect = document.getElementById('eventSelect');
-
-    const eventNames = {
-      "222": "2x2x2", "333": "3x3x3", "444": "4x4x4", "555": "5x5x5", "666": "6x6x6", "777": "7x7x7",
-      "sq1": "Square-1", "pyram": "Pyraminx", "minx": "Megaminx", "skewb": "Skewb", "clock": "Clock"
-    };
-
-    let running = false;
-    let startTime = 0;
-    let interval = null;
-
-    window.__bagLastSolve = null;
-    let session = [];
-
-    function fmtTime(sec){ return Number(sec).toFixed(2); }
-
-    function updateMeta(){
-      if(session.length === 0){
-        lastTimeEl.textContent = "—";
-        bestTimeEl.textContent = "—";
-        return;
-      }
-      const last = session[session.length - 1];
-      lastTimeEl.textContent = `${fmtTime(last.timeSec)}s`;
-      const best = session.reduce((m,x)=>Math.min(m,x.timeSec), Infinity);
-      bestTimeEl.textContent = `${fmtTime(best)}s`;
-    }
-
-    function renderCards(){
-      const has = session.length > 0;
-      emptyState.style.display = has ? "none" : "block";
-
-      solveCards.innerHTML = has ? session.slice().reverse().map((row) => {
-        const when = new Date(row.tsIso).toLocaleString();
-        return `
-          <div class="solve-card">
-            <div>
-              <div class="label">Solve</div>
-              <div class="value">#${row.n}</div>
+            <div class="card card-soft mt-3">
+              <div class="card-body p-4">
+                <h3 class="h6 fw-semibold">Contact</h3>
+                <p class="text-secondary small mb-2">
+                  Email: <a id="emailLink" class="link-light" href="#" rel="nofollow">hello@bagdigital.tech</a>
+                </p>
+                <p class="text-secondary small mb-0">
+                  Based in Beaufort, SC • Serving the Lowcountry and remote projects.
+                </p>
+              </div>
             </div>
-            <div>
-              <div class="label">Event</div>
-              <div class="value">${row.eventName}</div>
-            </div>
-            <div>
-              <div class="label">Time</div>
-              <div class="value mono">${fmtTime(row.timeSec)}s</div>
-            </div>
-            <div>
-              <div class="label">When</div>
-              <div class="value">${when}</div>
+
+            <noscript>
+              <div class="alert alert-warning mt-3">
+                JavaScript is disabled. Use the email link above to reach out.
+              </div>
+            </noscript>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="card card-glass shadow-soft">
+              <div class="card-body p-4 p-lg-5">
+
+                <form id="quoteForm" class="row g-3" autocomplete="on" novalidate>
+                  <!-- Honeypot -->
+                  <div class="visually-hidden" aria-hidden="true">
+                    <label>Leave this field empty <input name="company_site" tabindex="-1" autocomplete="off" /></label>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="name" class="form-label">Name</label>
+                    <input id="name" name="name" class="form-control form-control-lg" type="text" required autocomplete="name" />
+                    <div class="invalid-feedback">Please enter your name.</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="business" class="form-label">Business</label>
+                    <input id="business" name="business" class="form-control form-control-lg" type="text" autocomplete="organization" />
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" name="email" class="form-control form-control-lg" type="email" required autocomplete="email" inputmode="email" />
+                    <div class="invalid-feedback">Please enter a valid email.</div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="phone" class="form-label">Phone (optional)</label>
+                    <input id="phone" name="phone" class="form-control form-control-lg" type="tel" autocomplete="tel" inputmode="tel" />
+                  </div>
+
+                  <div class="col-12">
+                    <label for="need" class="form-label">What do you need?</label>
+                    <select id="need" name="need" class="form-select form-select-lg">
+                      <option>Website launch</option>
+                      <option>Website updates (WordPress or existing site)</option>
+                      <option>Lead intake automation</option>
+                      <option>Ops automation / dashboards</option>
+                      <option>Monthly care plan</option>
+                      <option>Not sure yet</option>
+                    </select>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="details" class="form-label">Project details</label>
+                    <textarea id="details" name="details" class="form-control" rows="6" required
+                      placeholder="Service area, goals, current site/tools, deadlines, and what success looks like."></textarea>
+                    <div class="invalid-feedback">Please add a short description.</div>
+                  </div>
+
+                  <div class="col-12 d-flex flex-column flex-sm-row gap-3 align-items-sm-center justify-content-sm-between mt-2">
+                    <button class="btn btn-light btn-lg text-dark" type="submit">Send request</button>
+                    <a id="emailDirectBtn" class="btn btn-outline-light btn-lg" href="#" rel="nofollow">Or email directly</a>
+                  </div>
+
+                  <div class="col-12">
+                    <div id="formStatus" class="small text-secondary" role="status" aria-live="polite"></div>
+                    <div class="small text-secondary mt-2">By submitting, you agree I can contact you about this request. No spam.</div>
+                  </div>
+                </form>
+
+              </div>
             </div>
           </div>
-        `;
-      }).join("") : "";
-    }
+        </div>
 
-    function getCsv(){
-      const header = ["solve","event","time_seconds","timestamp_iso"];
-      const lines = session.map(r => [r.n, r.eventName, fmtTime(r.timeSec), r.tsIso].join(","));
-      return [header.join(","), ...lines].join("\n");
-    }
+        <footer class="border-top border-light border-opacity-10 mt-5 pt-4 d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-md-between text-secondary small">
+          <div>© <span id="year"></span> BAG Digital • Beaufort, SC</div>
+          <div class="d-flex flex-wrap gap-3">
+            <a class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover" href="#services">Services</a>
+            <a class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover" href="#pricing">Pricing</a>
+            <a class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover" href="#work">Work</a>
+            <a class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover" href="/tools/">Tools</a>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
 
-    async function copyCsv(){
-      if(session.length === 0) return;
-      try{
-        await navigator.clipboard.writeText(getCsv());
-        copyCsvBtn.textContent = "Copied";
-        setTimeout(()=>copyCsvBtn.textContent="Copy CSV", 900);
-      }catch{
-        copyCsvBtn.textContent = "Copy failed";
-        setTimeout(()=>copyCsvBtn.textContent="Copy CSV", 900);
-      }
-    }
+  <!-- Bootstrap JS bundle (CDN + SRI) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"
+    defer
+  ></script>
 
-    function downloadCsv(){
-      if(session.length === 0) return;
-      const blob = new Blob([getCsv()], {type:"text/csv;charset=utf-8"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "bagdigital_cubing_session.csv";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    function startTimer(){
-      if(running) return;
-      running = true;
-      startStopBtn.textContent = "Stop";
-      startTime = performance.now();
-      interval = setInterval(() => {
-        timeDisplay.textContent = ((performance.now() - startTime) / 1000).toFixed(2);
-      }, 10);
-    }
-
-    function stopTimerAndLog(){
-      if(!running) return;
-      running = false;
-      clearInterval(interval);
-      interval = null;
-
-      const elapsed = (performance.now() - startTime) / 1000;
-      const elapsedFixed = Number(elapsed.toFixed(2));
-
-      timeDisplay.textContent = elapsedFixed.toFixed(2);
-      startStopBtn.textContent = "Start";
-
-      const eventCode = eventSelect.value;
-      const eventName = eventNames[eventCode] || eventCode;
-
-      const entry = {
-        n: session.length + 1,
-        eventCode,
-        eventName,
-        timeSec: elapsedFixed,
-        tsIso: new Date().toISOString()
-      };
-
-      session.push(entry);
-      window.__bagLastSolve = entry;
-
-      updateMeta();
-      renderCards();
-    }
-
-    function toggleTimer(){
-      if(running) stopTimerAndLog();
-      else startTimer();
-    }
-
-    function clearSession(){
-      running = false;
-      if(interval) clearInterval(interval);
-      interval = null;
-
-      session = [];
-      window.__bagLastSolve = null;
-
-      timeDisplay.textContent = "0.00";
-      startStopBtn.textContent = "Start";
-      updateMeta();
-      renderCards();
-    }
-
-    // Tap anywhere on timerScreen toggles start/stop,
-    // BUT do not trigger when interacting with controls.
-    timerScreen.addEventListener("pointerdown", (e) => {
-      const tag = (e.target && e.target.tagName) ? e.target.tagName.toUpperCase() : "";
-      const interactive = e.target.closest("button, md-filled-button, md-outlined-button, select, option, a, input, textarea, summary");
-      if (interactive) return;
-      e.preventDefault();
-      toggleTimer();
-    });
-
-    // Buttons still work
-    startStopBtn.addEventListener("click", (e) => { e.preventDefault(); startStopBtn.blur(); toggleTimer(); });
-    clearSessionBtn.addEventListener("click", (e) => { e.preventDefault(); clearSessionBtn.blur(); clearSession(); });
-
-    // Desktop spacebar
-    window.addEventListener("keydown", (e) => {
-      if(e.code !== "Space") return;
-      if(["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName)) return;
-      e.preventDefault();
-      toggleTimer();
-    });
-
-    copyCsvBtn.addEventListener("click", copyCsv);
-    downloadCsvBtn.addEventListener("click", downloadCsv);
-
-    updateMeta();
-    renderCards();
-  </script>
-
-  <!-- Organizer persistence (localStorage) -->
-  <script>
-    const LS_KEY = "bag_competition_organizer_fullscreen_v1";
-
-    const organizerRoot = document.getElementById("panel");
-    const notesEl = document.getElementById("notes");
-    const copyNotesBtn = document.getElementById("copyNotesBtn");
-    const clearNotesBtn = document.getElementById("clearNotesBtn");
-    const resetOrganizerBtn = document.getElementById("resetOrganizerBtn");
-
-    function loadOrganizer(){
-      try{
-        const raw = localStorage.getItem(LS_KEY);
-        if(!raw) return;
-        const data = JSON.parse(raw);
-
-        const boxes = organizerRoot.querySelectorAll('input[type="checkbox"][data-k]');
-        boxes.forEach((b) => {
-          const k = b.getAttribute("data-k");
-          if (k in (data.checks || {})) b.checked = !!data.checks[k];
-        });
-
-        if(typeof data.notes === "string") notesEl.value = data.notes;
-      }catch{}
-    }
-
-    function saveOrganizer(){
-      try{
-        const boxes = organizerRoot.querySelectorAll('input[type="checkbox"][data-k]');
-        const checks = {};
-        boxes.forEach((b) => checks[b.getAttribute("data-k")] = b.checked);
-        localStorage.setItem(LS_KEY, JSON.stringify({ checks, notes: notesEl.value || "" }));
-      }catch{}
-    }
-
-    function resetOrganizer(){
-      const boxes = organizerRoot.querySelectorAll('input[type="checkbox"][data-k]');
-      boxes.forEach((b) => b.checked = false);
-      notesEl.value = "";
-      saveOrganizer();
-    }
-
-    organizerRoot.addEventListener("change", (e) => {
-      if(e.target && e.target.matches('input[type="checkbox"][data-k]')) saveOrganizer();
-    });
-    notesEl.addEventListener("input", saveOrganizer);
-
-    copyNotesBtn.addEventListener("click", async () => {
-      try{
-        await navigator.clipboard.writeText(notesEl.value || "");
-        copyNotesBtn.textContent = "Copied";
-        setTimeout(()=>copyNotesBtn.textContent="Copy Notes", 900);
-      }catch{
-        copyNotesBtn.textContent = "Copy failed";
-        setTimeout(()=>copyNotesBtn.textContent="Copy Notes", 900);
-      }
-    });
-
-    clearNotesBtn.addEventListener("click", () => { notesEl.value = ""; saveOrganizer(); });
-    resetOrganizerBtn.addEventListener("click", resetOrganizer);
-
-    loadOrganizer();
-  </script>
-
-  <!-- Lead form submit -> Google Apps Script Web App (server unchanged) -->
-  <script>
-    const LEAD_ENDPOINT = "https://script.google.com/macros/s/AKfycbyXBZI3EMxmo3jS0VKhwiky9fVrgiOGGrm3EpYM-WS7v2ZEGkZ8tTODIKno8HhJ00jsew/exec"; // <-- paste your deployed URL
-    const HONEYPOT_NAME = "website";
-
-    const form = document.getElementById("leadForm");
-    const statusEl = document.getElementById("status");
-    const subBtn = document.getElementById("subBtn");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      statusEl.textContent = "";
-      subBtn.disabled = true;
-      subBtn.textContent = "Sending...";
-
-      const fd = new FormData(form);
-
-      if ((fd.get(HONEYPOT_NAME) || "").toString().trim().length > 0) {
-        subBtn.disabled = false;
-        subBtn.textContent = "Send";
-        return;
-      }
-
-      fd.append("source", "competition-day-fullscreen-timer");
-      fd.append("pageTitle", document.title);
-      fd.append("timestamp", new Date().toISOString());
-      fd.append("userAgent", navigator.userAgent);
-
-      if (window.__bagLastSolve) {
-        fd.append("lastSolveEvent", window.__bagLastSolve.eventName);
-        fd.append("lastSolveTimeSec", String(window.__bagLastSolve.timeSec));
-      }
-
-      try{
-        const organizerRaw = localStorage.getItem("bag_competition_organizer_fullscreen_v1");
-        if (organizerRaw) fd.append("organizerData", organizerRaw);
-      }catch{}
-
-      try {
-        const res = await fetch(LEAD_ENDPOINT, { method: "POST", body: fd });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok || !data.ok) throw new Error("Bad response");
-
-        statusEl.textContent = "Received. I’ll reply soon.";
-        form.reset();
-      } catch (err) {
-        statusEl.textContent = "Error sending. Please email Jaime@BAGdigital.tech.";
-      } finally {
-        subBtn.disabled = false;
-        subBtn.textContent = "Send";
-      }
-    });
-  </script>
-
+  <!-- Your JS (external to keep CSP strict) -->
+  <script src="/app.js" defer></script>
 </body>
 </html>
