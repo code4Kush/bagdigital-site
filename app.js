@@ -2,10 +2,7 @@ function $(id){ return document.getElementById(id); }
 
 const SETTINGS = {
   EMAIL_USER: "jaime",
-  EMAIL_DOMAIN: "bagdigital.tech",
-
-  // Future (you’ll tell me what to do later):
-  // APPS_SCRIPT_ENDPOINT: ""
+  EMAIL_DOMAIN: "bagdigital.tech"
 };
 
 function buildEmail(){ return `${SETTINGS.EMAIL_USER}@${SETTINGS.EMAIL_DOMAIN}`; }
@@ -40,10 +37,10 @@ function closeOffcanvasIfOpen(){
 }
 
 /**
- * CSP-safe remote swap:
- * - Always shows local /assets image
- * - If remote loads successfully, swap to remote
- * - If remote fails, local remains (your "backup")
+ * Reliability mode:
+ * - default uses local /assets image
+ * - if remote loads successfully, swap to remote (optional)
+ * - if remote fails, local remains (your backup)
  */
 function wireRemoteImages(){
   const imgs = document.querySelectorAll("img[data-remote]");
@@ -55,17 +52,17 @@ function wireRemoteImages(){
     probe.decoding = "async";
     probe.loading = "eager";
     probe.referrerPolicy = "no-referrer";
-
     probe.onload = () => { img.src = remote; };
-    // onerror: do nothing (keep local)
     probe.src = remote;
   });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // year
   const y = $("year");
   if (y) y.textContent = String(new Date().getFullYear());
 
+  // email links
   const email = buildEmail();
   const emailLink = $("emailLink");
   if (emailLink){
@@ -75,12 +72,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailBtn = $("emailDirectBtn");
   if (emailBtn) emailBtn.setAttribute("href", `mailto:${email}`);
 
+  // close nav on mobile link click
   document.querySelectorAll("[data-close-nav]").forEach(a => {
     a.addEventListener("click", () => closeOffcanvasIfOpen(), { passive:true });
   });
 
+  // remote image swap (optional)
   wireRemoteImages();
 
+  // form submit => mailto (no endpoint yet)
   const form = $("quoteForm");
   if (!form) return;
 
@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const data = new FormData(form);
 
+    // honeypot
     const hp = (data.get("company_site") || "").toString().trim();
     if (hp.length > 0){
       setStatus("Submission blocked.");
