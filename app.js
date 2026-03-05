@@ -29,18 +29,20 @@ function mailtoHref(formData){
   return `mailto:${encodeURIComponent(buildEmail())}?subject=${subject}&body=${body}`;
 }
 
-function closeOffcanvasIfOpen(){
-  const el = document.getElementById("navOffcanvas");
+function closeMobileNavIfOpen(){
+  const el = document.getElementById("primaryNav");
   if (!el || typeof bootstrap === "undefined") return;
-  const inst = bootstrap.Offcanvas.getInstance(el);
-  if (inst) inst.hide();
+
+  // If expanded, hide it after link click
+  const inst = bootstrap.Collapse.getInstance(el) || new bootstrap.Collapse(el, { toggle: false });
+  inst.hide();
 }
 
 /**
  * Reliability mode:
  * - default uses local /assets image
- * - if remote loads successfully, swap to remote (optional)
- * - if remote fails, local remains (your backup)
+ * - if remote loads successfully, swap to remote
+ * - if remote fails, local remains
  */
 function wireRemoteImages(){
   const imgs = document.querySelectorAll("img[data-remote]");
@@ -72,9 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailBtn = $("emailDirectBtn");
   if (emailBtn) emailBtn.setAttribute("href", `mailto:${email}`);
 
-  // close nav on mobile link click
+  // close mobile nav on link click
   document.querySelectorAll("[data-close-nav]").forEach(a => {
-    a.addEventListener("click", () => closeOffcanvasIfOpen(), { passive:true });
+    a.addEventListener("click", () => closeMobileNavIfOpen(), { passive:true });
   });
 
   // remote image swap (optional)

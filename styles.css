@@ -9,8 +9,6 @@
   --accent2:#A7FF83;
 
   --stroke: rgba(255,255,255,.14);
-  --surface: rgba(255,255,255,.08);
-
   --shadow: 0 20px 55px rgba(0,0,0,.52);
   --radius: 22px;
 }
@@ -27,19 +25,43 @@ html,body{
 
 .section{ scroll-margin-top: 92px; }
 
+/* Header / navbar sizing fixes */
 .header-glass{
   background: rgba(7,10,18,.84);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+.navbar-brand{ min-width: 0; }
+.brand-name{ font-size: 1.02rem; }
+.brand-sub{ font-size: .82rem; }
+@media (max-width: 420px){
+  .brand-sub{ display:none; } /* prevents cramped brand on very small screens */
+}
 
+.nav-pop{
+  color: var(--text) !important;
+  opacity:.92;
+  border-radius: 14px;
+  padding: .55rem .75rem !important;
+}
+.nav-pop:hover{
+  opacity:1;
+  background: rgba(255,255,255,.06);
+}
+
+/* Typography */
 .text-pop{ color: var(--text); text-shadow: 0 2px 18px rgba(0,0,0,.55); }
 .text-pop-muted{ color: var(--muted); }
 .text-accent{ color: var(--accent); }
 
-.nav-pop{ color: var(--text) !important; opacity:.92; }
-.nav-pop:hover{ opacity:1; }
+h1{
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.1rem, 4.2vw, 3.5rem);
+  line-height: 1.05;
+}
 
+/* Brand badge */
 .brand-badge{
   display:inline-flex;
   width:44px;height:44px;
@@ -88,9 +110,15 @@ html,body{
   padding: 1.25rem;
 }
 
+/* Pills */
 .badge-soft{
   background: rgba(255,255,255,.08);
   border: 1px solid var(--stroke);
+}
+.badge-pill{
+  background: rgba(0,0,0,.22);
+  border: 1px solid rgba(255,255,255,.14);
+  color: var(--muted);
 }
 .dot-live{
   width:10px;height:10px;border-radius:999px;
@@ -98,20 +126,7 @@ html,body{
   box-shadow: 0 0 0 4px rgba(167,255,131,.14);
 }
 
-.badge-pill{
-  background: rgba(0,0,0,.22);
-  border: 1px solid rgba(255,255,255,.14);
-  color: var(--muted);
-}
-
-h1{
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
-  line-height: 1.05;
-}
-
-/* Stack list inside hero tile */
+/* Stack list */
 .stack{ display:grid; gap:.75rem; }
 .stack-item{
   display:grid; grid-template-columns: 28px 1fr; gap:.75rem;
@@ -163,11 +178,10 @@ h1{
   border-color: rgba(119,230,255,.55) !important;
   box-shadow: 0 0 0 .25rem rgba(119,230,255,.12) !important;
 }
-
 .link-pop{ color: var(--accent); }
 .link-pop:hover{ color: #B8F3FF; }
 
-/* HERO (prevents weird spacing; media is always controlled) */
+/* HERO */
 .hero{
   position: relative;
   overflow: hidden;
@@ -189,7 +203,7 @@ h1{
     linear-gradient(180deg, rgba(7,10,18,.10) 0%, rgba(7,10,18,.86) 100%);
 }
 
-/* IMAGE CONTROL: fixes “images too large” */
+/* Image control */
 .media-frame{
   border-radius: var(--radius);
   overflow: hidden;
@@ -209,7 +223,7 @@ h1{
   .media-frame{ max-height: 240px; }
 }
 
-/* Contact: remove “dead left column” feeling on desktop */
+/* Contact: remove “dead left column” */
 @media (min-width: 992px){
   .contact-aside{
     position: sticky;
@@ -217,7 +231,7 @@ h1{
   }
 }
 
-/* Microinteractions + reduced motion */
+/* Microinteractions */
 a, .btn, .tile{
   transition: transform 140ms ease, filter 140ms ease, border-color 140ms ease, opacity 140ms ease;
 }
@@ -226,7 +240,6 @@ a, .btn, .tile{
   border-color: rgba(255,255,255,.22);
 }
 .btn:active{ transform: translateY(1px); }
-
 @media (prefers-reduced-motion: reduce){
   *{ transition: none !important; scroll-behavior: auto !important; }
 }
