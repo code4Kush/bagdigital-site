@@ -1,12 +1,11 @@
-/* No endpoint by default: this opens a mail draft (zero public API surface).
-   If you later add an API endpoint, it WILL be visible to users.
-   Do not put secrets in client code—use a backend proxy for secrets. */
-
 function $(id){ return document.getElementById(id); }
 
 const SETTINGS = {
-  EMAIL_USER: "hello",
-  EMAIL_DOMAIN: "bagdigital.tech"
+  EMAIL_USER: "jaime",
+  EMAIL_DOMAIN: "bagdigital.tech",
+
+  // Future (you’ll tell me what to do later):
+  // APPS_SCRIPT_ENDPOINT: ""
 };
 
 function buildEmail(){ return `${SETTINGS.EMAIL_USER}@${SETTINGS.EMAIL_DOMAIN}`; }
@@ -40,12 +39,33 @@ function closeOffcanvasIfOpen(){
   if (inst) inst.hide();
 }
 
+/**
+ * CSP-safe remote swap:
+ * - Always shows local /assets image
+ * - If remote loads successfully, swap to remote
+ * - If remote fails, local remains (your "backup")
+ */
+function wireRemoteImages(){
+  const imgs = document.querySelectorAll("img[data-remote]");
+  imgs.forEach((img) => {
+    const remote = (img.getAttribute("data-remote") || "").trim();
+    if (!remote) return;
+
+    const probe = new Image();
+    probe.decoding = "async";
+    probe.loading = "eager";
+    probe.referrerPolicy = "no-referrer";
+
+    probe.onload = () => { img.src = remote; };
+    // onerror: do nothing (keep local)
+    probe.src = remote;
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  // year
   const y = $("year");
   if (y) y.textContent = String(new Date().getFullYear());
 
-  // email links (light obfuscation)
   const email = buildEmail();
   const emailLink = $("emailLink");
   if (emailLink){
@@ -55,12 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailBtn = $("emailDirectBtn");
   if (emailBtn) emailBtn.setAttribute("href", `mailto:${email}`);
 
-  // close mobile nav on click
   document.querySelectorAll("[data-close-nav]").forEach(a => {
     a.addEventListener("click", () => closeOffcanvasIfOpen(), { passive:true });
   });
 
-  // form submit
+  wireRemoteImages();
+
   const form = $("quoteForm");
   if (!form) return;
 
@@ -76,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const data = new FormData(form);
 
-    // honeypot
     const hp = (data.get("company_site") || "").toString().trim();
     if (hp.length > 0){
       setStatus("Submission blocked.");

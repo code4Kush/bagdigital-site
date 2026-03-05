@@ -11,7 +11,7 @@
   <title>BAG Digital | Websites & Automations in Beaufort, SC</title>
   <meta name="description" content="BAG Digital (Jaime Torres) builds fast small business websites and Google Workspace automations in Beaufort, SC and the Lowcountry. Lead capture, follow-up flows, and ops dashboards." />
 
-  <!-- Strict CSP (no inline JS/CSS). If you later add analytics/embeds, update allowlists. -->
+  <!-- Strict CSP (no inline JS/CSS). Add allowlists later if you add analytics/embeds. -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     base-uri 'self';
@@ -35,12 +35,6 @@
     usb=()
   " />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="BAG Digital | Websites & Automations (Beaufort, SC)" />
-  <meta property="og:description" content="Fast websites + practical automation for small businesses and nonprofits in Beaufort and the Lowcountry." />
-  <meta property="og:url" content="https://bagdigital.tech/" />
-
   <!-- Bootstrap CSS (CDN + SRI) -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -48,10 +42,8 @@
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
     crossorigin="anonymous"
   />
-
   <link rel="stylesheet" href="/styles.css" />
 
-  <!-- Local SEO schema -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -90,7 +82,6 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Header -->
   <header class="sticky-top header-glass border-bottom border-light border-opacity-10">
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container py-2">
@@ -117,7 +108,6 @@
           <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
             <li class="nav-item"><a class="nav-link nav-pop" href="#services">Services</a></li>
             <li class="nav-item"><a class="nav-link nav-pop" href="#pricing">Pricing</a></li>
-            <li class="nav-item"><a class="nav-link nav-pop" href="#work">Work</a></li>
             <li class="nav-item"><a class="nav-link nav-pop" href="#contact">Contact</a></li>
             <li class="nav-item ms-lg-2">
               <a class="btn btn-glow btn-sm px-3" href="#contact">Request a quote</a>
@@ -127,7 +117,6 @@
       </div>
     </nav>
 
-    <!-- Mobile offcanvas -->
     <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="navOffcanvas" aria-labelledby="navOffcanvasLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title text-pop" id="navOffcanvasLabel">BAG Digital</h5>
@@ -137,7 +126,6 @@
         <div class="list-group list-group-flush">
           <a class="list-group-item list-group-item-action bg-transparent text-light" href="#services" data-close-nav>Services</a>
           <a class="list-group-item list-group-item-action bg-transparent text-light" href="#pricing" data-close-nav>Pricing</a>
-          <a class="list-group-item list-group-item-action bg-transparent text-light" href="#work" data-close-nav>Work</a>
           <a class="list-group-item list-group-item-action bg-transparent text-light" href="#contact" data-close-nav>Contact</a>
         </div>
       </div>
@@ -145,9 +133,19 @@
   </header>
 
   <main id="main">
-    <!-- HERO (background image from Pexels; no people) -->
-    <section id="top" class="hero hero-bg">
-      <div class="container py-5 py-lg-6">
+    <!-- HERO (local image + optional remote swap; no people) -->
+    <section id="top" class="hero">
+      <img
+        class="hero-media"
+        src="/assets/hero-1148820.jpg"
+        data-remote="https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg?cs=srgb&dl=pexels-cookiecutter-1148820.jpg&fm=jpg"
+        alt="Close-up of server modules with indicator lights (technology infrastructure)"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="container py-5 py-lg-6 position-relative">
         <div class="row g-4 align-items-center">
           <div class="col-lg-7">
             <div class="d-inline-flex align-items-center gap-2 badge-soft px-3 py-2 rounded-pill">
@@ -169,35 +167,8 @@
               <a class="btn btn-outline-pop btn-lg" href="#services">See services</a>
             </div>
 
-            <div class="row g-3 mt-4">
-              <div class="col-sm-4">
-                <div class="card card-pop h-100">
-                  <div class="card-body">
-                    <div class="small text-pop-muted">Best for</div>
-                    <div class="fw-semibold text-pop">Roofing, trades, home services</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="card card-pop h-100">
-                  <div class="card-body">
-                    <div class="small text-pop-muted">Also</div>
-                    <div class="fw-semibold text-pop">Nonprofits + outreach orgs</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="card card-pop h-100">
-                  <div class="card-body">
-                    <div class="small text-pop-muted">Support</div>
-                    <div class="fw-semibold text-pop">Scoped monthly Care Plans</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <p class="mt-4 mb-0 small text-pop-muted">
-              Local SEO fundamentals included (structure, performance, metadata). Rankings aren’t guaranteed—competition and content matter.
+              SEO fundamentals included (structure, performance, metadata). Rankings aren’t guaranteed—competition and content matter.
             </p>
           </div>
 
@@ -206,7 +177,7 @@
               <div class="card-body p-4 p-lg-5">
                 <h2 class="h6 fw-semibold mb-2 text-pop">What you get (typical)</h2>
                 <p class="small mb-4 text-pop-muted">
-                  A clean site plus a reliable lead intake workflow—instant notifications, confirmation to the lead, and a simple pipeline for tracking.
+                  A clean site plus a reliable lead intake workflow—notifications, confirmation to the lead, and simple tracking.
                 </p>
 
                 <div class="stack">
@@ -221,36 +192,29 @@
                     <div class="stack-num" aria-hidden="true">2</div>
                     <div>
                       <div class="fw-semibold text-pop">Lead routing</div>
-                      <div class="small text-pop-muted">Form → tracking sheet → notification to owner.</div>
+                      <div class="small text-pop-muted">Form → tracking → notify owner.</div>
                     </div>
                   </div>
                   <div class="stack-item">
                     <div class="stack-num" aria-hidden="true">3</div>
                     <div>
-                      <div class="fw-semibold text-pop">Follow-up support</div>
-                      <div class="small text-pop-muted">Care Plans for updates, fixes, and improvements.</div>
+                      <div class="fw-semibold text-pop">Support</div>
+                      <div class="small text-pop-muted">Scoped monthly Care Plans.</div>
                     </div>
                   </div>
-                </div>
-
-                <div class="d-flex flex-wrap gap-2 mt-4">
-                  <span class="badge rounded-pill badge-pill">Beaufort / Lowcountry</span>
-                  <span class="badge rounded-pill badge-pill">Google Workspace</span>
-                  <span class="badge rounded-pill badge-pill">Apps Script</span>
-                  <span class="badge rounded-pill badge-pill">WordPress (when needed)</span>
                 </div>
 
                 <a class="btn btn-outline-pop w-100 mt-4" href="#contact">Tell me what you need →</a>
               </div>
             </div>
 
-            <!-- Tech image (no people) -->
             <figure class="mt-3 mb-0">
               <img
                 class="img-fluid rounded-4 img-pop"
+                src="/assets/board-33798611.jpg"
+                data-remote="https://images.pexels.com/photos/33798611/pexels-photo-33798611.jpeg?cs=srgb&dl=pexels-alexandrep-junior-33798611.jpg&fm=jpg"
+                alt="Macro photo of motherboard components (technology hardware)"
                 loading="lazy"
-                src="https://images.pexels.com/photos/33798611/pexels-photo-33798611.jpeg?cs=srgb&dl=pexels-alexandrep-junior-33798611.jpg&fm=jpg"
-                alt="Close-up of computer motherboard with heat sink (tech hardware)"
               />
             </figure>
           </div>
@@ -258,21 +222,14 @@
       </div>
     </section>
 
-    <!-- SERVICES -->
     <section id="services" class="section border-top border-light border-opacity-10">
       <div class="container py-5">
-        <div class="row g-4 align-items-start">
+        <div class="row g-4">
           <div class="col-lg-4">
             <h2 class="h3 fw-bold text-pop">Services</h2>
             <p class="mt-3 text-pop-muted">
               Practical builds with clear scope: launch fast, keep it reliable, improve over time.
             </p>
-            <div class="card card-pop mt-3">
-              <div class="card-body">
-                <div class="small text-pop-muted">Local focus</div>
-                <div class="fw-semibold text-pop">Beaufort SC web developer • small business websites • automation</div>
-              </div>
-            </div>
           </div>
 
           <div class="col-lg-8">
@@ -281,13 +238,11 @@
                 <div class="card card-pop h-100">
                   <div class="card-body p-4">
                     <h3 class="h5 fw-semibold text-pop">Website Launch</h3>
-                    <p class="small mt-2 text-pop-muted">
-                      Fast, mobile-first pages for local businesses. Built for calls, quotes, and contact.
-                    </p>
+                    <p class="small mt-2 text-pop-muted">Fast, mobile-first pages built for calls, quotes, and contact.</p>
                     <ul class="small mt-3 mb-0 text-pop-muted">
-                      <li>1–5 pages (Home, Services, About, Service Area, Contact)</li>
-                      <li>Reliable contact flow (no lead loss)</li>
-                      <li>Local SEO fundamentals (structure + metadata)</li>
+                      <li>1–5 pages</li>
+                      <li>Reliable contact flow</li>
+                      <li>Local SEO fundamentals</li>
                     </ul>
                   </div>
                 </div>
@@ -297,58 +252,24 @@
                 <div class="card card-pop h-100">
                   <div class="card-body p-4">
                     <h3 class="h5 fw-semibold text-pop">Lead Intake Automation</h3>
-                    <p class="small mt-2 text-pop-muted">
-                      Turn inquiries into a pipeline with notifications, confirmations, and follow-up reminders.
-                    </p>
+                    <p class="small mt-2 text-pop-muted">Form → notifications → tracking pipeline.</p>
                     <ul class="small mt-3 mb-0 text-pop-muted">
-                      <li>Form → tracking sheet → notify owner (email/SMS)</li>
-                      <li>Auto-confirmation to the lead</li>
-                      <li>Reminders when no response is logged</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="card card-pop h-100">
-                  <div class="card-body p-4">
-                    <h3 class="h5 fw-semibold text-pop">Ops Automation</h3>
-                    <p class="small mt-2 text-pop-muted">
-                      Reduce admin work with repeatable workflows using Google Workspace + Apps Script.
-                    </p>
-                    <ul class="small mt-3 mb-0 text-pop-muted">
-                      <li>Intake + scheduling handoffs</li>
-                      <li>Dashboards + weekly summaries</li>
-                      <li>File organization + templated docs</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="card card-pop h-100">
-                  <div class="card-body p-4">
-                    <h3 class="h5 fw-semibold text-pop">WordPress Updates</h3>
-                    <p class="small mt-2 text-pop-muted">
-                      If you already have WordPress, I can improve content, layout, and reliability (safe, scoped updates).
-                    </p>
-                    <ul class="small mt-3 mb-0 text-pop-muted">
-                      <li>Content updates + layout improvements</li>
-                      <li>Mobile readability fixes</li>
-                      <li>Basic housekeeping (scoped)</li>
+                      <li>Owner notification</li>
+                      <li>Lead confirmation</li>
+                      <li>Follow-up reminders</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Tech image (no people) -->
             <figure class="mt-3 mb-0">
               <img
                 class="img-fluid rounded-4 img-pop"
+                src="/assets/mesh-8108651.jpg"
+                data-remote="https://images.pexels.com/photos/8108651/pexels-photo-8108651.jpeg?cs=srgb&dl=pexels-mikhail-nilov-8108651.jpg&fm=jpg"
+                alt="Circuit board behind wire mesh with neon lighting (technology abstract)"
                 loading="lazy"
-                src="https://images.pexels.com/photos/8108651/pexels-photo-8108651.jpeg?cs=srgb&dl=pexels-mikhail-nilov-8108651.jpg&fm=jpg"
-                alt="Circuit board behind wire mesh with neon lighting (technology background)"
               />
             </figure>
           </div>
@@ -356,15 +277,12 @@
       </div>
     </section>
 
-    <!-- PRICING -->
     <section id="pricing" class="section border-top border-light border-opacity-10">
       <div class="container py-5">
         <div class="d-flex flex-column flex-lg-row align-items-lg-end justify-content-lg-between gap-3">
           <div>
             <h2 class="h3 fw-bold text-pop">Pricing</h2>
-            <p class="mt-2 mb-0 text-pop-muted">
-              Clear starting points. Exact pricing depends on scope. Monthly support is scoped with included hours + response times.
-            </p>
+            <p class="mt-2 mb-0 text-pop-muted">Clear starting points. Exact pricing depends on scope.</p>
           </div>
           <a class="btn btn-glow" href="#contact">Get an estimate</a>
         </div>
@@ -374,181 +292,61 @@
             <div class="card card-pop h-100">
               <div class="card-body p-4">
                 <h3 class="h5 fw-semibold text-pop">Basic Website + Contact</h3>
-                <p class="small mt-2 text-pop-muted">A clean, fast site with a reliable contact flow.</p>
                 <div class="price text-pop mt-3">from $600</div>
-                <ul class="small mt-3 mb-0 text-pop-muted">
-                  <li>1–3 pages</li>
-                  <li>Mobile-first</li>
-                  <li>Contact form routed correctly</li>
-                </ul>
+                <p class="small mt-2 text-pop-muted mb-0">1–3 pages, mobile-first, reliable contact flow.</p>
               </div>
             </div>
           </div>
-
           <div class="col-md-4">
             <div class="card card-pop h-100">
               <div class="card-body p-4">
                 <h3 class="h5 fw-semibold text-pop">Lead Intake Automation</h3>
-                <p class="small mt-2 text-pop-muted">Form → notifications → pipeline tracking.</p>
                 <div class="price text-pop mt-3">from $750</div>
-                <ul class="small mt-3 mb-0 text-pop-muted">
-                  <li>Tracking pipeline (Sheet/CRM)</li>
-                  <li>Confirmation to lead</li>
-                  <li>Follow-up reminders</li>
-                </ul>
+                <p class="small mt-2 text-pop-muted mb-0">Notifications + tracking pipeline + follow-up.</p>
               </div>
             </div>
           </div>
-
           <div class="col-md-4">
             <div class="card card-pop h-100">
               <div class="card-body p-4">
-                <h3 class="h5 fw-semibold text-pop">Ops Automation</h3>
-                <p class="small mt-2 text-pop-muted">Workflows + dashboards to reduce admin work.</p>
-                <div class="price text-pop mt-3">from $1,500</div>
-                <ul class="small mt-3 mb-0 text-pop-muted">
-                  <li>Apps Script workflows</li>
-                  <li>Dashboards + summaries</li>
-                  <li>Doc/file templating</li>
-                </ul>
+                <h3 class="h5 fw-semibold text-pop">Care Plans</h3>
+                <div class="price text-pop mt-3">$149–$699<span class="fs-6 text-pop-muted">/mo</span></div>
+                <p class="small mt-2 text-pop-muted mb-0">Scoped monthly support with included hours.</p>
               </div>
             </div>
           </div>
         </div>
 
-        <h3 class="h4 fw-bold mt-5 text-pop">Monthly Care Plans</h3>
-        <p class="mt-2 text-pop-muted">
-          Predictable support: defined scope + included hours (no “unlimited retainer” ambiguity).
-        </p>
-
-        <div class="row g-3 mt-2">
-          <div class="col-md-4">
-            <div class="card card-pop h-100">
-              <div class="card-body p-4">
-                <h4 class="h5 fw-semibold text-pop">Starter Care</h4>
-                <p class="small mt-2 text-pop-muted">Keep the site stable and updated.</p>
-                <div class="price text-pop mt-3">$149–$249<span class="fs-6 text-pop-muted">/mo</span></div>
-                <ul class="small mt-3 mb-0 text-pop-muted">
-                  <li>Monitoring + basic housekeeping</li>
-                  <li>30–60 minutes small edits</li>
-                  <li>Response within 1 business day</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card card-feature h-100 shadow-pop">
-              <div class="card-body p-4">
-                <div class="badge-soft px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2">
-                  <span class="dot-live" aria-hidden="true"></span>
-                  <span class="small text-pop-muted">Most popular</span>
-                </div>
-                <h4 class="h5 fw-semibold mt-3 text-pop">Care + Improvements</h4>
-                <p class="small mt-2 text-pop-muted">Maintenance + steady progress each month.</p>
-                <div class="price text-pop mt-3">$349–$699<span class="fs-6 text-pop-muted">/mo</span></div>
-                <ul class="small mt-3 mb-0 text-pop-muted">
-                  <li>Monitoring + backups (where applicable)</li>
-                  <li>2 hours improvements/month</li>
-                  <li>Response within 1 business day</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card card-pop h-100">
-              <div class="card-body p-4">
-                <h4 class="h5 fw-semibold text-pop">Automation Support</h4>
-                <p class="small mt-2 text-pop-muted">Reliability for lead + ops workflows.</p>
-                <div class="price text-pop mt-3">$899–$1,599<span class="fs-6 text-pop-muted">/mo</span></div>
-                <ul class="small mt-3 mb-0 text-pop-muted">
-                  <li>Workflow monitoring + fixes</li>
-                  <li>2–4 hours improvements/month</li>
-                  <li>Priority response for intake issues</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p class="small mt-3 mb-0 text-pop-muted">
-          Third-party costs (domains, hosting, email/SMS tools) billed separately. Plans are scoped; larger work is quoted.
-        </p>
-      </div>
-    </section>
-
-    <!-- WORK -->
-    <section id="work" class="section border-top border-light border-opacity-10">
-      <div class="container py-5">
-        <div class="row g-4">
-          <div class="col-lg-4">
-            <h2 class="h3 fw-bold text-pop">Work</h2>
-            <p class="mt-3 text-pop-muted">
-              Early projects are listed conservatively (scope-only). More detailed case studies will be added as results accumulate.
-            </p>
-          </div>
-          <div class="col-lg-8">
-            <div class="card card-pop">
-              <div class="card-body p-4">
-                <h3 class="h5 fw-semibold text-pop">Lowcountry Outreach Center</h3>
-                <p class="small mt-2 text-pop-muted">
-                  WordPress content + layout updates on an existing site (maintenance-focused engagement).
-                </p>
-                <ul class="small mt-3 mb-0 text-pop-muted">
-                  <li>Updated page content and section layouts for clarity and consistency</li>
-                  <li>Responsive adjustments for improved mobile readability</li>
-                  <li>Basic housekeeping (safe, scoped updates)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card card-pop mt-3">
-              <div class="card-body p-4">
-                <h3 class="h5 fw-semibold text-pop">Currently booking</h3>
-                <p class="small mt-2 mb-0 text-pop-muted">
-                  If you’re a local service business (roofing, trades, home services), I can build a site + lead intake system that’s reliable and easy to operate.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tech image (no people) -->
         <figure class="mt-4 mb-0">
           <img
             class="img-fluid rounded-4 img-pop"
+            src="/assets/racks-17489160.jpg"
+            data-remote="https://images.pexels.com/photos/17489160/pexels-photo-17489160.jpeg?cs=srgb&dl=pexels-cookiecutter-17489160.jpg&fm=jpg"
+            alt="Rows of server racks with status lights (data center)"
             loading="lazy"
-            src="https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg?cs=srgb&dl=pexels-cookiecutter-1148820.jpg&fm=jpg"
-            alt="Close-up of a mining rig / server rack with blue lighting (technology infrastructure)"
           />
         </figure>
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" class="section border-top border-light border-opacity-10">
       <div class="container py-5">
         <div class="row g-4 align-items-start">
           <div class="col-lg-5">
             <h2 class="h3 fw-bold text-pop">Contact</h2>
-            <p class="mt-3 text-pop-muted">
-              Send a short description and I’ll reply with a simple plan and next steps.
-            </p>
+            <p class="mt-3 text-pop-muted">Email me a short description and I’ll reply with next steps.</p>
 
             <div class="card card-pop mt-3">
               <div class="card-body p-4">
                 <h3 class="h6 fw-semibold text-pop">Email</h3>
                 <p class="small mb-0 text-pop-muted">
-                  <a id="emailLink" class="link-pop" href="#" rel="nofollow">hello@bagdigital.tech</a>
+                  <a id="emailLink" class="link-pop" href="#" rel="nofollow">jaime@bagdigital.tech</a>
                 </p>
               </div>
             </div>
 
             <noscript>
-              <div class="alert alert-warning mt-3">
-                JavaScript is disabled. Use the email link above to reach out.
-              </div>
+              <div class="alert alert-warning mt-3">JavaScript is disabled. Use the email link above.</div>
             </noscript>
           </div>
 
@@ -556,7 +354,6 @@
             <div class="card card-glass shadow-pop">
               <div class="card-body p-4 p-lg-5">
                 <form id="quoteForm" class="row g-3" autocomplete="on" novalidate>
-                  <!-- Honeypot -->
                   <div class="visually-hidden" aria-hidden="true">
                     <label>Leave this field empty <input name="company_site" tabindex="-1" autocomplete="off" /></label>
                   </div>
@@ -589,7 +386,6 @@
                       <option>Website launch</option>
                       <option>Website updates (WordPress or existing site)</option>
                       <option>Lead intake automation</option>
-                      <option>Ops automation / dashboards</option>
                       <option>Monthly care plan</option>
                       <option>Not sure yet</option>
                     </select>
@@ -609,14 +405,16 @@
 
                   <div class="col-12">
                     <div id="formStatus" class="small text-pop-muted" role="status" aria-live="polite"></div>
-                    <div class="small mt-2 text-pop-muted">By submitting, you agree I can contact you about this request. No spam.</div>
+                    <div class="small mt-2 text-pop-muted">
+                      This form opens an email draft (no endpoint). Later, you can switch it to Apps Script safely.
+                    </div>
                   </div>
                 </form>
               </div>
             </div>
 
             <p class="mt-3 small text-pop-muted">
-              Note: this form opens an email draft (no endpoint). If you later add an API endpoint, do **not** embed secrets in the browser—use a proxy (Worker/server) instead.
+              Tech photos are sourced from Pexels and saved locally in <code>/assets</code> for reliability.
             </p>
           </div>
         </div>
@@ -624,8 +422,7 @@
         <footer class="border-top border-light border-opacity-10 mt-5 pt-4 d-flex flex-column flex-md-row gap-2 align-items-md-center justify-content-md-between">
           <div class="small text-pop-muted">© <span id="year"></span> BAG Digital • Beaufort, SC</div>
           <div class="small text-pop-muted">
-            Tech photos: Pexels
-            <a class="link-pop ms-1" href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer">pexels.com</a>
+            Photos: <a class="link-pop" href="https://www.pexels.com/" target="_blank" rel="noopener noreferrer">Pexels</a>
           </div>
         </footer>
       </div>
@@ -639,7 +436,6 @@
     crossorigin="anonymous"
     defer
   ></script>
-
   <script src="/app.js" defer></script>
 </body>
 </html>
